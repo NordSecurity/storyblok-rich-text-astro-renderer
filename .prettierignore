@@ -1,0 +1,24 @@
+*
+CHANGELOG.md
+!*/
+!*.yml
+!*.json
+!*.js
+!*.mjs
+!*.cjs
+!*.ts
+!*.tsx
+!*.html
+!*.css
+!*.astro
+
+# npm files
+node_modules
+package-lock.json
+
+# project
+dist
+.yarn
+.history
+**/coverage/
+.github

@@ -1,0 +1,30 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Variants = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+export type Tags = Variants | "span" | "p";
+
+export interface Props extends HTMLAttributes<"p"> {
+  variant: Variants;
+  tag: Tags;
+}
+
+const { variant, tag } = Astro.props;
+
+const variantClass = {
+  h1: "heading-3xl",
+  h2: "heading-2xl",
+  h3: "heading-xl",
+  h4: "heading-lg",
+  h5: "heading-md",
+  h6: "heading-sm",
+}[variant];
+
+const Component = tag || variant || "p";
+---
+
+<Component
+  class:list={[variantClass, Astro.props.class, Astro.props["class:list"]]}
+>
+  <slot />
+</Component>

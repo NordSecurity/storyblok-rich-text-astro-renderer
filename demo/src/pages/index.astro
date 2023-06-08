@@ -1,0 +1,169 @@
+---
+import type { RichTextType } from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro";
+import Layout from "../layouts/Layout.astro";
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+
+const richTextFromStoryblok: RichTextType = {
+  type: "doc",
+  content: [
+    {
+      type: "heading",
+      attrs: {
+        level: 1,
+      },
+      content: [
+        {
+          text: "storyblok-rich-text-astro-renderer",
+          type: "text",
+        },
+      ],
+    },
+    {
+      type: "paragraph",
+      content: [
+        {
+          text: "This is paragraph. I will bold ",
+          type: "text",
+        },
+        {
+          text: "this",
+          type: "text",
+          marks: [
+            {
+              type: "bold",
+            },
+          ],
+        },
+        {
+          text: ", underline ",
+          type: "text",
+        },
+        {
+          text: "this",
+          type: "text",
+          marks: [
+            {
+              type: "underline",
+            },
+          ],
+        },
+        {
+          text: ", and make ",
+          type: "text",
+        },
+        {
+          text: "this",
+          type: "text",
+          marks: [
+            {
+              type: "italic",
+            },
+          ],
+        },
+        {
+          text: " italic. ",
+          type: "text",
+        },
+      ],
+    },
+    {
+      type: "paragraph",
+      content: [
+        {
+          text: "One m",
+          type: "text",
+        },
+        {
+          text: "ore paragraph. ",
+          type: "text",
+          marks: [
+            {
+              type: "bold",
+            },
+          ],
+        },
+        {
+          text: "This is a link",
+          type: "text",
+          marks: [
+            {
+              type: "link",
+              attrs: {
+                href: "/",
+                uuid: "6c401799-b2ad-4854-aa3e-f58ac59bf763",
+                anchor: null,
+                custom: {},
+                target: "_blank",
+                linktype: "story",
+              },
+            },
+            {
+              type: "bold",
+            },
+          ],
+        },
+        {
+          text: ".",
+          type: "text",
+          marks: [
+            {
+              type: "bold",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      type: "blok",
+      attrs: {
+        id: "63f693c0-4a1b-46d7-af9b-b67eadb1cf2b",
+        body: [
+          {
+            _uid: "i-b29a4416-7e0e-49ed-a9ee-23e2299f8df4",
+            title: "Hello",
+            component: "button",
+          },
+        ],
+      },
+    },
+    {
+      type: "heading",
+      attrs: {
+        level: 2,
+      },
+      content: [
+        {
+          text: "Heading",
+          type: "text",
+        },
+      ],
+    },
+    {
+      type: "paragraph",
+      content: [
+        {
+          text: "Yet one more paragraph. ",
+          type: "text",
+        },
+      ],
+    },
+  ],
+};
+
+// this should idealy come from Storyblok CMS
+const story = {
+  content: { component: "rich_text", text: richTextFromStoryblok },
+};
+---
+
+<Layout title="Welcome to Astro.">
+  <main>
+    <StoryblokComponent blok={story.content} />
+  </main>
+</Layout>
+
+<style>
+  main {
+    padding: 1.5rem;
+  }
+</style>

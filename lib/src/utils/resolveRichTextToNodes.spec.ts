@@ -1,0 +1,1019 @@
+import { describe, expect, it } from "vitest";
+
+import {
+  resolveMark,
+  resolveNode,
+  resolveRichTextToNodes,
+} from "./resolveRichTextToNodes";
+import { Mark, RichTextType, Schema, SchemaNode } from "../types";
+
+describe("resolveNode", () => {
+  const Text = () => null;
+  const StoryblokComponent = () => null;
+
+  it("break", () => {
+    const node: SchemaNode = { type: "hard_break" };
+
+    // default
+    expect(resolveNode(node)).toStrictEqual({
+      component: "br",
+    });
+
+    // with schema override
+    expect(
+      resolveNode(node, {
+        schema: {
+          nodes: {
+            hard_break: () => ({
+              component: "div",
+              props: { class: "break" },
+            }),
+          },
+        },
+      })
+    ).toStrictEqual({
+      component: "div",
+      props: {
+        class: "break",
+      },
+    });
+  });
+
+  it("text", () => {
+    const node: SchemaNode = {
+      text: "I am text",
+      type: "text",
+    };
+
+    // default
+    expect(resolveNode(node)).toStrictEqual({ content: "I am text" });
+
+    // with marks
+    expect(
+      resolveNode({
+        text: "I am text",
+        type: "text",
+        marks: [{ type: "bold" }],
+      })
+    ).toStrictEqual({
+      content: [
+        {
+          component: "b",
+          content: [{ content: "I am text" }],
+        },
+      ],
+    });
+
+    // with schema override
+    expect(
+      resolveNode(node, {
+        schema: {
+          nodes: {
+            text: () => ({
+              component: "span",
+              props: { class: "this-is-text" },
+            }),
+          },
+        },
+      })
+    ).toStrictEqual({
+      component: "span",
+      props: {
+        class: "this-is-text",
+      },
+      content: "I am text",
+    });
+  });
+
+  it("paragraph", () => {
+    const node: SchemaNode = {
+      type: "paragraph",
+      content: [
+        {
+          text: "Simple text",
+          type: "text",
+        },
+        { type: "hard_break" },
+        {
+          text: "Another text",
+          type: "text",
+        },
+      ],
+    };
+
+    // default
+    expect(resolveNode(node)).toStrictEqual({
+      component: "p",
+      content: [
+        {
+          content: "Simple text",
+        },
+        {
+          component: "br",
+        },
+        {
+          content: "Another text",
+        },
+      ],
+    });
+
+    // with schema override
+    expect(
+      resolveNode(node, {
+        schema: {
+          nodes: {
+            paragraph: () => ({
+              component: Text,
+              props: { class: "this-is-paragraph" },
+            }),
+          },
+        },
+      })
+    ).toStrictEqual({
+      component: Text,
+      props: {
+        class: "this-is-paragraph",
+      },
+      content: [
+        {
+          content: "Simple text",
+        },
+        {
+          component: "br",
+        },
+        {
+          content: "Another text",
+        },
+      ],
+    });
+
+    // empty line
+    expect(resolveNode({ type: "paragraph" })).toStrictEqual({
+      component: "br",
+    });
+  });
+
+  it("heading", () => {
+    const node: SchemaNode = {
+      type: "heading",
+      attrs: {
+        level: 1,
+      },
+      content: [
+        {
+          text: "Hello from rich text",
+          type: "text",
+        },
+      ],
+    };
+
+    // default
+    expect(resolveNode(node)).toStrictEqual({
+      component: "h1",
+      content: [
+        {
+          content: "Hello from rich text",
+        },
+      ],
+    });
+
+    // with schema override
+    expect(
+      resolveNode(node, {
+        schema: {
+          nodes: {
+            heading: ({ attrs: { level } }) => ({
+              component: Text,
+              props: { variant: `level-${level}`, tag: `h${level}` },
+            }),
+          },
+        },
+      })
+    ).toStrictEqual({
+      component: Text,
+      props: {
+        tag: "h1",
+        variant: "level-1",
+      },
+      content: [{ content: "Hello from rich text" }],
+    });
+  });
+
+  it("blok", () => {
+    expect(
+      resolveNode(
+        {
+          type: "blok",
+          attrs: {
+            id: "63f693c0-4a1b-46d7-af9b-b67eadb1cf2b",
+            body: [
+              {
+                size: "medium",
+                color: "blue",
+                title: "Hello",
+                component: "button",
+              },
+            ],
+          },
+        },
+        {
+          resolver: (blok) => {
+            return {
+              component: StoryblokComponent,
+              props: { blok },
+            };
+          },
+        }
+      )
+    ).toStrictEqual({
+      content: [
+        {
+          component: StoryblokComponent,
+          props: {
+            blok: {
+              size: "medium",
+              color: "blue",
+              title: "Hello",
+              component: "button",
+            },
+          },
+        },
+      ],
+    });
+  });
+});
+
+describe("resolveMark", () => {
+  const MultiLink = () => null;
+
+  const sharedSchema: Schema = {
+    marks: {
+      link: ({ attrs }) => {
+        const { href, ...restAttrs } = attrs;
+
+        return {
+          component: MultiLink,
+          props: {
+            link: {
+              ...restAttrs,
+              url: href,
+            },
+          },
+        };
+      },
+      bold: () => ({
+        component: "span",
+        props: {
+          class: "bold",
+        },
+      }),
+      underline: () => ({
+        component: "span",
+        props: {
+          class: "underline",
+        },
+      }),
+      italic: () => ({
+        component: "span",
+        props: {
+          class: "italic",
+        },
+      }),
+      styled: ({ attrs }) => {
+        const resolveTextColorToClass = (color) =>
+          ({
+            blue: "this-is-blue",
+            red: "this-is-red",
+            pink: "this-is-pink",
+          }[color]);
+
+        return {
+          props: {
+            class: resolveTextColorToClass(attrs.class),
+          },
+        };
+      },
+    },
+  };
+
+  const content = [{ content: "content" }];
+
+  it("link", () => {
+    const markUrl: Mark = {
+      type: "link",
+      attrs: {
+        linktype: "url",
+        href: "https://example.com",
+        target: "_self",
+      },
+    };
+
+    const markEmail: Mark = {
+      type: "link",
+      attrs: {
+        linktype: "email",
+        href: "mail@mail.com",
+        target: "_blank",
+      },
+    };
+
+    const markAnchor: Mark = {
+      type: "link",
+      attrs: {
+        linktype: "url",
+        href: "https://example.com",
+        target: "_self",
+        anchor: "hey",
+      },
+    };
+
+    // default
+    expect(resolveMark(content, markUrl)).toStrictEqual({
+      component: "a",
+      content,
+      props: {
+        href: "https://example.com",
+      },
+    });
+
+    expect(resolveMark(content, markEmail)).toStrictEqual({
+      component: "a",
+      content,
+      props: {
+        href: "mailto:mail@mail.com",
+        target: "_blank",
+      },
+    });
+
+    expect(resolveMark(content, markAnchor)).toStrictEqual({
+      component: "a",
+      content,
+      props: {
+        href: "https://example.com#hey",
+      },
+    });
+
+    // with schema override
+    expect(resolveMark(content, markUrl, sharedSchema)).toStrictEqual({
+      component: MultiLink,
+      content,
+      props: {
+        link: {
+          linktype: "url",
+          target: "_self",
+          url: "https://example.com",
+        },
+      },
+    });
+  });
+
+  it("bold", () => {
+    const mark: Mark = { type: "bold" };
+
+    // default
+    expect(resolveMark(content, mark)).toStrictEqual({
+      component: "b",
+      content,
+    });
+
+    // with schema override
+    expect(resolveMark(content, mark, sharedSchema)).toStrictEqual({
+      component: "span",
+      content,
+      props: {
+        class: "bold",
+      },
+    });
+  });
+
+  it("underline", () => {
+    const mark: Mark = { type: "underline" };
+
+    // default
+    expect(resolveMark(content, mark)).toStrictEqual({
+      component: "u",
+      content,
+    });
+
+    // with schema override
+    expect(resolveMark(content, mark, sharedSchema)).toStrictEqual({
+      component: "span",
+      content,
+      props: {
+        class: "underline",
+      },
+    });
+  });
+
+  it("italic", () => {
+    const mark: Mark = { type: "italic" };
+
+    // default
+    expect(resolveMark(content, mark)).toStrictEqual({
+      component: "i",
+      content,
+    });
+
+    // with schema override
+    expect(resolveMark(content, mark, sharedSchema)).toStrictEqual({
+      component: "span",
+      content,
+      props: {
+        class: "italic",
+      },
+    });
+  });
+
+  it("styled", () => {
+    const mark: Mark = {
+      type: "styled",
+      attrs: {
+        class: "red",
+      },
+    };
+
+    // default
+    expect(resolveMark(content, mark)).toStrictEqual({
+      component: "span",
+      content,
+    });
+
+    // with schema override
+    expect(resolveMark(content, mark, sharedSchema)).toStrictEqual({
+      component: "span",
+      content,
+      props: {
+        class: "this-is-red",
+      },
+    });
+  });
+});
+
+describe("resolveRichTextToNodes", () => {
+  const Text = () => null;
+  const MultiLink = () => null;
+  const StoryblokComponent = () => null;
+
+  const resolver = (blok) => {
+    return {
+      component: StoryblokComponent,
+      props: { blok },
+    };
+  };
+
+  const schema: Schema = {
+    nodes: {
+      heading: ({ attrs: { level } }) => ({
+        component: Text,
+        props: { variant: `heading-${level}`, tag: `h${level}` },
+      }),
+      paragraph: () => ({
+        component: Text,
+        props: {
+          class: "some-color-class",
+        },
+      }),
+    },
+    marks: {
+      link: ({ attrs }) => {
+        const { href, custom, ...restAttrs } = attrs;
+
+        return {
+          component: MultiLink,
+          props: {
+            link: {
+              ...restAttrs,
+              ...custom,
+              url: href,
+            },
+          },
+        };
+      },
+    },
+  };
+
+  it("resolves complex Storyblok richtext structure correctly", () => {
+    const richTextFromStoryblok: RichTextType = {
+      type: "doc",
+      content: [
+        {
+          type: "blok",
+          attrs: {
+            id: "63f693c0-4a1b-46d7-af9b-b67eadb1cf2b",
+            body: [
+              {
+                _uid: "i-b29a4416-7e0e-49ed-a9ee-23e2299f8df4",
+                icon: "",
+                link: {
+                  id: "6c401799-b2ad-4854-aa3e-f58ac59bf763",
+                  url: "",
+                  linktype: "story",
+                  fieldtype: "multilink",
+                  cached_url: "home",
+                },
+                size: "medium",
+                color: "blue",
+                title: "Hello",
+                gaSlug: "",
+                disabled: false,
+                outlined: false,
+                component: "button",
+                isFullWidth: false,
+              },
+            ],
+          },
+        },
+        {
+          type: "heading",
+          attrs: {
+            level: 1,
+          },
+          content: [
+            {
+              text: "Hello from rich text",
+              type: "text",
+            },
+          ],
+        },
+        {
+          type: "paragraph",
+          content: [
+            {
+              text: "This is paragraph. I will bold ",
+              type: "text",
+            },
+            {
+              text: "this",
+              type: "text",
+              marks: [
+                {
+                  type: "bold",
+                },
+              ],
+            },
+            {
+              text: ", underline ",
+              type: "text",
+            },
+            {
+              text: "this",
+              type: "text",
+              marks: [
+                {
+                  type: "underline",
+                },
+              ],
+            },
+            {
+              text: ", and make ",
+              type: "text",
+            },
+            {
+              text: "this",
+              type: "text",
+              marks: [
+                {
+                  type: "italic",
+                },
+              ],
+            },
+            {
+              text: " italic. ",
+              type: "text",
+            },
+          ],
+        },
+        {
+          type: "paragraph",
+          content: [
+            {
+              text: "One m",
+              type: "text",
+            },
+            {
+              text: "ore paragraph. ",
+              type: "text",
+              marks: [
+                {
+                  type: "bold",
+                },
+              ],
+            },
+            {
+              text: "This is a link",
+              type: "text",
+              marks: [
+                {
+                  type: "link",
+                  attrs: {
+                    href: "/",
+                    uuid: "6c401799-b2ad-4854-aa3e-f58ac59bf763",
+                    anchor: null,
+                    custom: {},
+                    target: "_blank",
+                    linktype: "story",
+                  },
+                },
+                {
+                  type: "bold",
+                },
+              ],
+            },
+            {
+              text: ".",
+              type: "text",
+              marks: [
+                {
+                  type: "bold",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: "heading",
+          attrs: {
+            level: 2,
+          },
+          content: [
+            {
+              text: "Heading",
+              type: "text",
+            },
+          ],
+        },
+        {
+          type: "paragraph",
+          content: [
+            {
+              text: "Yet one more paragraph. ",
+              type: "text",
+            },
+            {
+              text: "Email",
+              type: "text",
+              marks: [
+                {
+                  type: "link",
+                  attrs: {
+                    href: "aaa@aaa.aaa",
+                    uuid: null,
+                    anchor: null,
+                    custom: {},
+                    target: "_self",
+                    linktype: "email",
+                  },
+                },
+              ],
+            },
+            {
+              type: "hard_break",
+            },
+            {
+              text: "asset link",
+              type: "text",
+              marks: [
+                {
+                  type: "link",
+                  attrs: {
+                    href: "https://a-us.storyblok.com/f/1001711/x/af23ad3670/screenshot-2022-10-20-at-12-08-39.png",
+                    uuid: null,
+                    anchor: null,
+                    custom: {},
+                    target: "_self",
+                    linktype: "asset",
+                  },
+                },
+              ],
+            },
+            {
+              type: "hard_break",
+            },
+            {
+              text: "internal link with anchor",
+              type: "text",
+              marks: [
+                {
+                  type: "link",
+                  attrs: {
+                    href: "/page",
+                    uuid: "143e938c-45ab-40cf-b60f-19c1678610d8",
+                    anchor: "demo",
+                    custom: {},
+                    target: "_self",
+                    linktype: "story",
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: "paragraph",
+          content: [
+            {
+              text: "external link",
+              type: "text",
+              marks: [
+                {
+                  type: "link",
+                  attrs: {
+                    href: "https://example.com/",
+                    uuid: null,
+                    anchor: null,
+                    custom: {},
+                    target: "_self",
+                    linktype: "url",
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    };
+
+    expect(
+      resolveRichTextToNodes(richTextFromStoryblok, { schema, resolver })
+    ).toStrictEqual([
+      {
+        content: [
+          {
+            component: StoryblokComponent,
+            props: {
+              blok: {
+                _uid: "i-b29a4416-7e0e-49ed-a9ee-23e2299f8df4",
+                icon: "",
+                link: {
+                  id: "6c401799-b2ad-4854-aa3e-f58ac59bf763",
+                  url: "",
+                  linktype: "story",
+                  fieldtype: "multilink",
+                  cached_url: "home",
+                },
+                size: "medium",
+                color: "blue",
+                title: "Hello",
+                gaSlug: "",
+                disabled: false,
+                outlined: false,
+                component: "button",
+                isFullWidth: false,
+              },
+            },
+          },
+        ],
+      },
+      {
+        component: Text,
+        props: {
+          variant: "heading-1",
+          tag: "h1",
+        },
+        content: [
+          {
+            content: "Hello from rich text",
+          },
+        ],
+      },
+      {
+        component: Text,
+        props: {
+          class: "some-color-class",
+        },
+        content: [
+          {
+            content: "This is paragraph. I will bold ",
+          },
+          {
+            content: [
+              {
+                component: "b",
+                content: [
+                  {
+                    content: "this",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            content: ", underline ",
+          },
+          {
+            content: [
+              {
+                component: "u",
+                content: [
+                  {
+                    content: "this",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            content: ", and make ",
+          },
+          {
+            content: [
+              {
+                component: "i",
+                content: [
+                  {
+                    content: "this",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            content: " italic. ",
+          },
+        ],
+      },
+      {
+        component: Text,
+        props: {
+          class: "some-color-class",
+        },
+        content: [
+          {
+            content: "One m",
+          },
+          {
+            content: [
+              {
+                component: "b",
+                content: [
+                  {
+                    content: "ore paragraph. ",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            content: [
+              {
+                component: MultiLink,
+                props: {
+                  link: {
+                    uuid: "6c401799-b2ad-4854-aa3e-f58ac59bf763",
+                    anchor: null,
+                    target: "_blank",
+                    linktype: "story",
+                    url: "/",
+                  },
+                },
+                content: [
+                  {
+                    component: "b",
+                    content: [
+                      {
+                        content: "This is a link",
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            content: [
+              {
+                component: "b",
+                content: [
+                  {
+                    content: ".",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        component: Text,
+        props: {
+          variant: "heading-2",
+          tag: "h2",
+        },
+        content: [
+          {
+            content: "Heading",
+          },
+        ],
+      },
+      {
+        component: Text,
+        props: {
+          class: "some-color-class",
+        },
+        content: [
+          {
+            content: "Yet one more paragraph. ",
+          },
+          {
+            content: [
+              {
+                component: MultiLink,
+                props: {
+                  link: {
+                    uuid: null,
+                    anchor: null,
+                    target: "_self",
+                    linktype: "email",
+                    url: "aaa@aaa.aaa",
+                  },
+                },
+                content: [
+                  {
+                    content: "Email",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            component: "br",
+          },
+          {
+            content: [
+              {
+                component: MultiLink,
+                props: {
+                  link: {
+                    uuid: null,
+                    anchor: null,
+                    target: "_self",
+                    linktype: "asset",
+                    url: "https://a-us.storyblok.com/f/1001711/x/af23ad3670/screenshot-2022-10-20-at-12-08-39.png",
+                  },
+                },
+                content: [
+                  {
+                    content: "asset link",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            component: "br",
+          },
+          {
+            content: [
+              {
+                component: MultiLink,
+                props: {
+                  link: {
+                    uuid: "143e938c-45ab-40cf-b60f-19c1678610d8",
+                    anchor: "demo",
+                    target: "_self",
+                    linktype: "story",
+                    url: "/page",
+                  },
+                },
+                content: [
+                  {
+                    content: "internal link with anchor",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        component: Text,
+        props: {
+          class: "some-color-class",
+        },
+        content: [
+          {
+            content: [
+              {
+                component: MultiLink,
+                props: {
+                  link: {
+                    uuid: null,
+                    anchor: null,
+                    target: "_self",
+                    linktype: "url",
+                    url: "https://example.com/",
+                  },
+                },
+                content: [
+                  {
+                    content: "external link",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ]);
+  });
+});

@@ -1,0 +1,48 @@
+---
+import { resolveRichTextToNodes } from "./dist/index.mjs";
+import { ComponentNode, Options, RichTextType } from "./dist/types";
+
+export type { RichTextType };
+
+export type Props = {
+  content: RichTextType;
+  schema?: Options["schema"];
+  /**
+   Resolver function used for rendering inlined CMS bloks. Usually via StoryblokComponent, f.e.
+   ```
+    resolver={(blok) => {
+       return {
+         component: StoryblokComponent,
+         props: { blok },
+       };
+    }}
+   ```
+   */
+  resolver: Options["resolver"];
+};
+
+const { content, schema, resolver, ...props } = Astro.props;
+
+const nodes = resolveRichTextToNodes(content, { schema, resolver });
+---
+
+<div {...props}>
+  {
+    () => {
+      const renderNode = (node: ComponentNode) => {
+        if (node == null) return;
+
+        const { component: Component = Fragment, content, props } = node;
+        let resolvedContent = content;
+
+        if (Array.isArray(content)) {
+          resolvedContent = content.map(renderNode);
+        }
+
+        return <Component {...props}>{resolvedContent}</Component>;
+      };
+
+      return nodes.map(renderNode);
+    }
+  }
+</div>
