@@ -1,0 +1,13 @@
+---
+import { storyblokEditable, type SbBlokData as Blok } from "@storyblok/astro";
+import Button, { type Props as ButtonProps } from "../components/Button.astro";
+
+export type Props = {
+  blok: Blok & ButtonProps;
+};
+
+const { blok } = Astro.props;
+const { title } = blok;
+---
+
+<Button {title} {...storyblokEditable(blok)} />
