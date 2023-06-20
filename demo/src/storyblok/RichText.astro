@@ -1,0 +1,56 @@
+---
+import RichTextRenderer, {
+  type RichTextType,
+} from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro";
+import { storyblokEditable } from "@storyblok/astro";
+import Link from "../components/Link.astro";
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import Text from "../components/Text.astro";
+
+export interface Props {
+  blok: {
+    text: RichTextType;
+  };
+}
+
+const { blok } = Astro.props;
+const { text } = blok;
+---
+
+<RichTextRenderer
+  content={text}
+  schema={{
+    nodes: {
+      heading: ({ attrs: { level } }) => ({
+        component: Text,
+        props: { variant: `h${level}` },
+      }),
+      paragraph: () => ({
+        component: Text,
+        props: {
+          class: "this-is-paragraph",
+        },
+      }),
+    },
+    marks: {
+      link: ({ attrs }) => {
+        const { custom, ...restAttrs } = attrs;
+
+        return {
+          component: Link,
+          props: {
+            link: { ...custom, ...restAttrs },
+            class: "i-am-link",
+          },
+        };
+      },
+    },
+  }}
+  resolver={(blok) => {
+    return {
+      component: StoryblokComponent,
+      props: { blok },
+    };
+  }}
+  {...storyblokEditable(blok)}
+/>

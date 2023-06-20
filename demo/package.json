@@ -1,0 +1,17 @@
+{
+  "name": "demo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "try": "npm run build & npm run preview"
+  },
+  "dependencies": {
+    "@storyblok/astro": "^2.3.4",
+    "astro": "^2.6.1"
+  }
+}

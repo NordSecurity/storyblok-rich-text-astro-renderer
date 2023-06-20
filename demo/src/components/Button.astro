@@ -1,0 +1,19 @@
+---
+export type Props = {
+  title: string;
+};
+
+const { title } = Astro.props;
+---
+
+<button type="button">{title}</button>
+
+<style>
+  button {
+    border: none;
+    border-radius: 2px;
+    padding: 10px;
+    background-color: #9da3ff;
+    cursor: pointer;
+  }
+</style>

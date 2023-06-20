@@ -1,0 +1,13 @@
+---
+export type Props = {
+  link: {
+    href: string;
+    target?: "_blank" | "_self";
+  };
+};
+
+const { link, ...props } = Astro.props;
+const { href, target } = link;
+---
+
+<a {href} {target} {...props}><slot /></a>
