@@ -11,7 +11,7 @@
     "try": "npm run build & npm run preview"
   },
   "dependencies": {
-    "@storyblok/astro": "^2.3.4",
+    "@storyblok/astro": "^2.4.0",
     "astro": "^2.6.1"
   }
 }
