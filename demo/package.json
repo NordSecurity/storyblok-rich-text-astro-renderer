@@ -12,6 +12,6 @@
   },
   "dependencies": {
     "@storyblok/astro": "^2.3.4",
-    "astro": "^2.6.1"
+    "astro": "^2.6.6"
   }
 }
