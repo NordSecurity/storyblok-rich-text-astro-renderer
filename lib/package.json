@@ -9,6 +9,14 @@
     "resolver",
     "renderer"
   ],
+  "homepage": "https://github.com/NordSecurity/storyblok-rich-text-astro-renderer",
+  "bugs": {
+    "url": "https://github.com/NordSecurity/storyblok-rich-text-astro-renderer/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NordSecurity/storyblok-rich-text-astro-renderer"
+  },
   "license": "MIT",
   "author": "Edvinas Jurele",
   "exports": {
@@ -34,10 +42,18 @@
     "test:watch": "vitest watch",
     "ts:check": "tsc"
   },
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
   "devDependencies": {
     "@storyblok/js": "^2.1.3",
     "astro": "^2.3.0",
     "vite": "^4.3.1",
     "vite-plugin-dts": "^2.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -1,15 +1,13 @@
-name: Release CI
+name: QA
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
-  release:
+  qa:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,9 +23,3 @@ jobs:
         run: npm run build
       - name: QA check
         run: npm run qa
-      - name: Release
-        working-directory: lib
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release
