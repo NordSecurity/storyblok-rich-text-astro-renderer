@@ -2,6 +2,9 @@
 
 Renders Storyblok rich text content to Astro elements.
 
+[![GitHub](https://img.shields.io/github/license/NordSecurity/storyblok-rich-text-astro-renderer?style=flat-square)](https://github.com/NordSecurity/storyblok-rich-text-astro-renderer/blob/main/LICENSE)
+[![NPM](https://img.shields.io/npm/v/storyblok-rich-text-astro-renderer/latest.svg?style=flat-square)](https://npmjs.com/package/storyblok-rich-text-astro-renderer)
+
 ## Motivation
 
 Official Storyblok + Astro integration (`@storyblok/astro`) provides the most basic possibility to render rich-text in Astro. The integration package re-exports the generic rich text utility from `@storyblok/js` package, which is framework-agnostic and universal.
@@ -61,6 +64,12 @@ export type ComponentNode = {
     props?: Record<string, unknown>;     // <-- properties object
     content?: string | ComponentNode[];  // <-- content, which can either be string or other component node
 };
+```
+
+## Installation
+
+```
+npm install storyblok-rich-text-astro-renderer
 ```
 
 ## Usage
