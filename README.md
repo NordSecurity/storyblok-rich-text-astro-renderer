@@ -63,12 +63,6 @@ export type ComponentNode = {
 };
 ```
 
-## Installation
-
-```
-npm install storyblok-rich-text-astro-renderer
-```
-
 ## Usage
 
 To get the most basic functionality, add `RichText.astro` Storyblok component to the project:
