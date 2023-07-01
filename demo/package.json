@@ -7,11 +7,15 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "start-stackblitz": "npm install storyblok-rich-text-astro-renderer@latest && npm run dev",
     "preview": "astro preview",
     "try": "npm run build & npm run preview"
   },
   "dependencies": {
     "@storyblok/astro": "^2.4.0",
     "astro": "^2.7.0"
+  },
+  "stackblitz": {
+    "startCommand": "npm run start-stackblitz"
   }
 }
