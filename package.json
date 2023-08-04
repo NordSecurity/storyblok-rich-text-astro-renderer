@@ -39,7 +39,7 @@
     "eslint-plugin-astro": "^0.27.2",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.2",
-    "prettier": "^2.8.8",
+    "prettier": "^3.0.1",
     "prettier-plugin-astro": "^0.10.0",
     "sort-package-json": "^2.4.1",
     "typescript": "^5.1.3",
