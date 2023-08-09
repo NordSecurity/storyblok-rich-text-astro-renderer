@@ -165,7 +165,7 @@ export const resolveNode = (
   node: SchemaNode,
   options: Options = {}
 ): ComponentNode => {
-  const { schema } = options;
+  const { schema, textResolver } = options;
 
   if (node.type === "heading") {
     const resolverFn = schema?.nodes?.[node.type];
@@ -286,7 +286,13 @@ export const resolveNode = (
     const { text, marks } = node;
 
     if (marks) {
-      let marked: ComponentNode[] = [{ content: text }];
+      let marked: ComponentNode[] = [
+        {
+          content: text,
+          ...textResolver?.(text),
+        },
+      ];
+
       [...marks].reverse().forEach((mark) => {
         marked = [resolveMark(marked, mark, schema)];
       });
@@ -297,9 +303,22 @@ export const resolveNode = (
       };
     }
 
+    const resolverResult = resolverFn?.(node);
+    const textResolverResult = textResolver?.(text);
+
+    if (resolverResult && textResolverResult) {
+      return {
+        component: resolverResult.component,
+        props: resolverResult.props,
+        content: [textResolverResult],
+      };
+    }
+
     return {
       content: text,
       ...resolverFn?.(node),
+      ...textResolverResult,
+      ...resolverResult,
     };
   }
 
