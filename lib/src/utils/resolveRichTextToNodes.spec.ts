@@ -263,7 +263,6 @@ describe("resolveNode", () => {
       component: "li",
       content: [
         {
-          component: "Fragment",
           content: [
             {
               content: "one",
@@ -291,7 +290,6 @@ describe("resolveNode", () => {
       },
       content: [
         {
-          component: "Fragment",
           content: [{ content: "one" }],
         },
       ],
@@ -344,7 +342,6 @@ describe("resolveNode", () => {
           component: "li",
           content: [
             {
-              component: "Fragment",
               content: [{ content: "one" }],
             },
           ],
@@ -353,7 +350,6 @@ describe("resolveNode", () => {
           component: "li",
           content: [
             {
-              component: "Fragment",
               content: [{ content: "two" }],
             },
           ],
@@ -383,7 +379,6 @@ describe("resolveNode", () => {
           component: "li",
           content: [
             {
-              component: "Fragment",
               content: [{ content: "one" }],
             },
           ],
@@ -392,7 +387,6 @@ describe("resolveNode", () => {
           component: "li",
           content: [
             {
-              component: "Fragment",
               content: [{ content: "two" }],
             },
           ],
@@ -444,7 +438,6 @@ describe("resolveNode", () => {
           component: "li",
           content: [
             {
-              component: "Fragment",
               content: [{ content: "one" }],
             },
           ],
@@ -453,7 +446,6 @@ describe("resolveNode", () => {
           component: "li",
           content: [
             {
-              component: "Fragment",
               content: [{ content: "two" }],
             },
           ],
@@ -483,7 +475,6 @@ describe("resolveNode", () => {
           component: "li",
           content: [
             {
-              component: "Fragment",
               content: [{ content: "one" }],
             },
           ],
@@ -492,7 +483,6 @@ describe("resolveNode", () => {
           component: "li",
           content: [
             {
-              component: "Fragment",
               content: [{ content: "two" }],
             },
           ],
