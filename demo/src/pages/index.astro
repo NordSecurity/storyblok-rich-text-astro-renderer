@@ -23,11 +23,15 @@ const richTextFromStoryblok: RichTextType = {
       type: "paragraph",
       content: [
         {
-          text: "This is paragraph. I will bold ",
+          text: "This is simple paragraph.",
           type: "text",
         },
         {
-          text: "this",
+          text: "Marks: ",
+          type: "text",
+        },
+        {
+          text: "bold",
           type: "text",
           marks: [
             {
@@ -36,11 +40,11 @@ const richTextFromStoryblok: RichTextType = {
           ],
         },
         {
-          text: ", underline ",
+          text: ", ",
           type: "text",
         },
         {
-          text: "this",
+          text: "underline",
           type: "text",
           marks: [
             {
@@ -49,11 +53,11 @@ const richTextFromStoryblok: RichTextType = {
           ],
         },
         {
-          text: ", and make ",
+          text: ", ",
           type: "text",
         },
         {
-          text: "this",
+          text: "italic",
           type: "text",
           marks: [
             {
@@ -62,11 +66,11 @@ const richTextFromStoryblok: RichTextType = {
           ],
         },
         {
-          text: " italic. ",
+          text: ", ",
           type: "text",
         },
         {
-          text: "This is a link",
+          text: "link",
           type: "text",
           marks: [
             {
@@ -84,6 +88,27 @@ const richTextFromStoryblok: RichTextType = {
               type: "bold",
             },
           ],
+        },
+        {
+          text: ".",
+          type: "text",
+        },
+      ],
+    },
+    {
+      type: "paragraph",
+      content: [
+        {
+          type: "image",
+          attrs: {
+            id: 111111,
+            alt: "My alt text",
+            src: "https://dummyimage.com/300x200/eee/aaa", // this will actually be Storyblok native link (https://a-us.storyblok.com/f/.../276x83/.../image.png) and it contains width/height information.
+            title: "The title",
+            source: "The source",
+            copyright: "The copyright text",
+            meta_data: {},
+          },
         },
       ],
     },

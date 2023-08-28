@@ -122,6 +122,17 @@ export const resolveNode = (
     };
   }
 
+  if (node.type === "image") {
+    const { attrs } = node;
+    const { src, alt } = attrs;
+
+    return {
+      component: "img",
+      props: { src, alt },
+      ...resolverFn?.({ attrs }),
+    };
+  }
+
   if (node.type === "ordered_list") {
     const { content, attrs } = node;
 
