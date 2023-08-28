@@ -133,6 +133,17 @@ export const resolveNode = (
     };
   }
 
+  if (node.type === "code_block") {
+    const { attrs, content } = node;
+
+    return {
+      component: "pre",
+      props: { class: attrs.class },
+      content: content.map((node) => resolveNode(node, options)),
+      ...resolverFn?.({ attrs }),
+    };
+  }
+
   if (node.type === "ordered_list") {
     const { content, attrs } = node;
 
