@@ -158,22 +158,29 @@ schema={{
     paragraph: () => ({ ... }),
     text: () => ({ ... }),
     hard_break: () => ({ ... }),
-    horizontal_rule: () => ({ ... }),
-    bullet_list: () => ({ ... }),
-    blockquote: () => ({ ... }),
-    code_block: () => ({ ... }),
-    image: () => ({ ... }),
-    list_item: () => ({ ... }),
-    ordered_item: () => ({ ... }),
+    horizontal_rule: () => ({ ... }), // NOT SUPPORTED YET!
+    bullet_list: () => ({ ... }), // NOT SUPPORTED YET!
+    list_item: () => ({ ... }), // NOT SUPPORTED YET!
+    ordered_list: ({ attrs }) => ({ ... }), // NOT SUPPORTED YET!
+    ordered_item: () => ({ ... }), // NOT SUPPORTED YET!
+    blockquote: () => ({ ... }), // NOT SUPPORTED YET!
+    code_block: () => ({ ... }), // NOT SUPPORTED YET!
+    image: () => ({ ... }), // NOT SUPPORTED YET!
   },
   marks: {
     link: ({ attrs }) => { ... },
     bold: () => ({ ... }),
-    strong: () => ({ ... }),
     underline: () => ({ ... }),
     italic: () => ({ ... }),
-    strike: () => ({ ... }),
     styled: ({ attrs }) => { ... },
+    strike: () => ({ ... }), // NOT SUPPORTED YET!
+    superscript: () => ({ ... }), // NOT SUPPORTED YET!
+    subscript: () => ({ ... }), // NOT SUPPORTED YET!
+    code: () => ({ ... }), // NOT SUPPORTED YET!
+    anchor: ({ attrs }) => ({ ... }), // NOT SUPPORTED YET!
+    emoji: ({ attrs }) => ({ ... }), // NOT SUPPORTED YET!
+    textStyle: ({ attrs }) => ({ ... }), // NOT SUPPORTED YET!
+    highlight: ({ attrs }) => ({ ... }), // NOT SUPPORTED YET!
   };
 }}
 ```
