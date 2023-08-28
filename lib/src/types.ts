@@ -20,8 +20,8 @@ export type Schema = {
     bullet_list?: ResponseSchemaFn;
     ordered_list?: ResponseSchemaAttrsFn;
     list_item?: ResponseSchemaFn;
+    horizontal_rule?: ResponseSchemaFn;
     // TODO: add support. The following are known, though not supported yet
-    // horizontal_rule?: ResponseSchemaFn;
     // blockquote?: ResponseSchemaFn;
     // code_block?: ResponseSchemaFn;
     // image?: ResponseSchemaFn;
@@ -66,6 +66,8 @@ export type Mark =
 
 type Break = { type: "hard_break" };
 
+type HorizontalRule = { type: "horizontal_rule" };
+
 type Text = {
   type: "text";
   text: string;
@@ -95,7 +97,7 @@ type Blok = {
 
 type ListItem = {
   type: "list_item";
-  content?: Array<Paragraph | Blok | BulletList | OrderedList>;
+  content?: Array<Paragraph | Blok | BulletList | OrderedList | HorizontalRule>;
 };
 
 type BulletList = {
@@ -119,10 +121,20 @@ export type SchemaNode =
   | Blok
   | BulletList
   | OrderedList
-  | ListItem;
+  | ListItem
+  | Break
+  | HorizontalRule;
 
 // TODO: expand with full nodes/marks support
 export type RichTextType = {
   type: "doc";
-  content: Array<Heading | Paragraph | Blok | BulletList | OrderedList>;
+  content: Array<
+    | Heading
+    | Paragraph
+    | Blok
+    | BulletList
+    | OrderedList
+    | Break
+    | HorizontalRule
+  >;
 };
