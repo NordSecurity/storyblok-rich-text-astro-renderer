@@ -1,0 +1,15 @@
+---
+const { src, alt, title } = Astro.props;
+
+/*
+  NOTE: src is usually Storyblok native link (https://a-us.storyblok.com/f/.../276x83/.../image.png) and it contains width/height information. You can resolve and use it.
+  For DEMO purposes I use https://dummyimage.com/300x200/eee/aaa image, thus the resolving is slightly different.
+*/
+const [width, height] = new URL(src).pathname
+  .split("/")[1] // in case of Storyblok native link format, this should be [3]
+  .split("x");
+---
+
+<picture title={title}>
+  <img {src} {alt} {height} {width} />
+</picture>

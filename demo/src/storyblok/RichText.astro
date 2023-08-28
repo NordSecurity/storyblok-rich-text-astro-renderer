@@ -8,6 +8,7 @@ import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
 import Text from "../components/Text.astro";
 import BulletList from "../components/BulletList.astro";
 import Blockquote from "../components/Blockquote.astro";
+import Picture from "../components/Picture.astro";
 
 export interface Props {
   blok: {
@@ -53,6 +54,10 @@ const { text } = blok;
       }),
       blockquote: () => ({
         component: Blockquote,
+      }),
+      image: ({ attrs }) => ({
+        component: Picture,
+        props: attrs,
       }),
     },
     marks: {

@@ -22,9 +22,9 @@ export type Schema = {
     list_item?: ResponseSchemaFn;
     horizontal_rule?: ResponseSchemaFn;
     blockquote?: ResponseSchemaFn;
+    image?: ResponseSchemaAttrsFn;
     // TODO: add support. The following are known, though not supported yet
     // code_block?: ResponseSchemaFn;
-    // image?: ResponseSchemaFn;
   };
   marks?: {
     link?: ResponseSchemaAttrsFn;
@@ -76,7 +76,7 @@ type Text = {
 
 type Paragraph = {
   type: "paragraph";
-  content?: Array<Text | Break | ListItem>;
+  content?: Array<Text | Break | ListItem | Image>;
 };
 
 type Heading = {
@@ -95,14 +95,31 @@ type Blok = {
   };
 };
 
+type Image = {
+  type: "image";
+  attrs: {
+    id: number;
+    alt?: string;
+    src: string;
+    title?: string;
+    source?: string;
+    copyright?: string;
+    meta_data?: Record<string, string>;
+  };
+};
+
 type Blockquote = {
   type: "blockquote";
-  content?: Array<Paragraph | Blok | BulletList | OrderedList | HorizontalRule>;
+  content?: Array<
+    Paragraph | Blok | BulletList | OrderedList | HorizontalRule | Image
+  >;
 };
 
 type ListItem = {
   type: "list_item";
-  content?: Array<Paragraph | Blok | BulletList | OrderedList | HorizontalRule>;
+  content?: Array<
+    Paragraph | Blok | BulletList | OrderedList | HorizontalRule | Image
+  >;
 };
 
 type BulletList = {
@@ -128,7 +145,7 @@ type RichTextContent =
   | HorizontalRule
   | Blockquote;
 
-export type SchemaNode = RichTextContent | Text | ListItem;
+export type SchemaNode = RichTextContent | Text | ListItem | Image;
 
 // TODO: expand with full nodes/marks support
 export type RichTextType = {

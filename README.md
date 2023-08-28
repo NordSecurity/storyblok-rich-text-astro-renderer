@@ -163,8 +163,8 @@ schema={{
     list_item: () => ({ ... }),
     horizontal_rule: () => ({ ... }),
     blockquote: () => ({ ... }),
+    image: () => ({ ... }),
     code_block: () => ({ ... }), // NOT SUPPORTED YET!
-    image: () => ({ ... }), // NOT SUPPORTED YET!
   },
   marks: {
     link: ({ attrs }) => { ... },
