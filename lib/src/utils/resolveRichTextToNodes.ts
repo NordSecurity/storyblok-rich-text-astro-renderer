@@ -134,7 +134,6 @@ export const resolveNode = (
         // skip rendering p tag inside li
         if (node.type === "paragraph") {
           return {
-            component: "Fragment",
             content: node.content.map((node) => resolveNode(node, options)),
           };
         }
