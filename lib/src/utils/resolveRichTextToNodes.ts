@@ -112,6 +112,16 @@ export const resolveNode = (
     };
   }
 
+  if (node.type === "blockquote") {
+    const { content } = node;
+
+    return {
+      component: "blockquote",
+      content: content.map((node) => resolveNode(node, options)),
+      ...resolverFn?.(),
+    };
+  }
+
   if (node.type === "ordered_list") {
     const { content, attrs } = node;
 
