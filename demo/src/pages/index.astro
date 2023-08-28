@@ -65,24 +65,6 @@ const richTextFromStoryblok: RichTextType = {
           text: " italic. ",
           type: "text",
         },
-      ],
-    },
-    {
-      type: "paragraph",
-      content: [
-        {
-          text: "One ",
-          type: "text",
-        },
-        {
-          text: "more paragraph. ",
-          type: "text",
-          marks: [
-            {
-              type: "bold",
-            },
-          ],
-        },
         {
           text: "This is a link",
           type: "text",
@@ -103,12 +85,17 @@ const richTextFromStoryblok: RichTextType = {
             },
           ],
         },
+      ],
+    },
+    {
+      type: "blockquote",
+      content: [
         {
-          text: ".",
-          type: "text",
-          marks: [
+          type: "paragraph",
+          content: [
             {
-              type: "bold",
+              text: "This is a quote",
+              type: "text",
             },
           ],
         },

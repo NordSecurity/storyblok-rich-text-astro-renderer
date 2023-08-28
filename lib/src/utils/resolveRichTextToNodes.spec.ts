@@ -270,6 +270,59 @@ describe("resolveNode", () => {
     });
   });
 
+  it("blockquote", () => {
+    const node: SchemaNode = {
+      type: "blockquote",
+      content: [
+        {
+          type: "paragraph",
+          content: [
+            {
+              text: "This is a quote",
+              type: "text",
+            },
+          ],
+        },
+      ],
+    };
+
+    // default
+    expect(resolveNode(node)).toStrictEqual({
+      component: "blockquote",
+      content: [
+        {
+          component: "p",
+          content: [{ content: "This is a quote" }],
+        },
+      ],
+    });
+
+    // with schema override
+    expect(
+      resolveNode(node, {
+        schema: {
+          nodes: {
+            blockquote: () => ({
+              component: "blockquote",
+              props: { cite: "https://examples.com/" },
+            }),
+          },
+        },
+      })
+    ).toStrictEqual({
+      component: "blockquote",
+      props: {
+        cite: "https://examples.com/",
+      },
+      content: [
+        {
+          component: "p",
+          content: [{ content: "This is a quote" }],
+        },
+      ],
+    });
+  });
+
   it("list_item", () => {
     const node: SchemaNode = {
       type: "list_item",

@@ -21,8 +21,8 @@ export type Schema = {
     ordered_list?: ResponseSchemaAttrsFn;
     list_item?: ResponseSchemaFn;
     horizontal_rule?: ResponseSchemaFn;
+    blockquote?: ResponseSchemaFn;
     // TODO: add support. The following are known, though not supported yet
-    // blockquote?: ResponseSchemaFn;
     // code_block?: ResponseSchemaFn;
     // image?: ResponseSchemaFn;
   };
@@ -95,6 +95,11 @@ type Blok = {
   };
 };
 
+type Blockquote = {
+  type: "blockquote";
+  content?: Array<Paragraph | Blok | BulletList | OrderedList | HorizontalRule>;
+};
+
 type ListItem = {
   type: "list_item";
   content?: Array<Paragraph | Blok | BulletList | OrderedList | HorizontalRule>;
@@ -113,28 +118,20 @@ type OrderedList = {
   content?: Array<ListItem>;
 };
 
-export type SchemaNode =
-  | Break
-  | Text
+type RichTextContent =
   | Heading
   | Paragraph
   | Blok
   | BulletList
   | OrderedList
-  | ListItem
   | Break
-  | HorizontalRule;
+  | HorizontalRule
+  | Blockquote;
+
+export type SchemaNode = RichTextContent | Text | ListItem;
 
 // TODO: expand with full nodes/marks support
 export type RichTextType = {
   type: "doc";
-  content: Array<
-    | Heading
-    | Paragraph
-    | Blok
-    | BulletList
-    | OrderedList
-    | Break
-    | HorizontalRule
-  >;
+  content: Array<RichTextContent>;
 };

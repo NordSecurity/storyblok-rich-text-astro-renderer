@@ -162,7 +162,7 @@ schema={{
     ordered_list: ({ attrs }) => ({ ... }),
     list_item: () => ({ ... }),
     horizontal_rule: () => ({ ... }),
-    blockquote: () => ({ ... }), // NOT SUPPORTED YET!
+    blockquote: () => ({ ... }),
     code_block: () => ({ ... }), // NOT SUPPORTED YET!
     image: () => ({ ... }), // NOT SUPPORTED YET!
   },
