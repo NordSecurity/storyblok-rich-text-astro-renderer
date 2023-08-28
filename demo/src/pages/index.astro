@@ -70,11 +70,11 @@ const richTextFromStoryblok: RichTextType = {
       type: "paragraph",
       content: [
         {
-          text: "One m",
+          text: "One ",
           type: "text",
         },
         {
-          text: "ore paragraph. ",
+          text: "more paragraph. ",
           type: "text",
           marks: [
             {
@@ -120,7 +120,7 @@ const richTextFromStoryblok: RichTextType = {
         body: [
           {
             _uid: "i-b29a4416-7e0e-49ed-a9ee-23e2299f8df4",
-            title: "Hello",
+            title: "Button [blok]",
             component: "button",
           },
         ],
@@ -142,8 +142,105 @@ const richTextFromStoryblok: RichTextType = {
       type: "paragraph",
       content: [
         {
-          text: "Yet one more paragraph. ",
+          text: "Yet one more paragraph.",
           type: "text",
+        },
+      ],
+    },
+    {
+      type: "bullet_list",
+      content: [
+        {
+          type: "list_item",
+          content: [
+            {
+              type: "paragraph",
+              content: [
+                {
+                  text: "one",
+                  type: "text",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: "list_item",
+          content: [
+            {
+              type: "paragraph",
+              content: [
+                {
+                  text: "two",
+                  type: "text",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: "list_item",
+          content: [
+            {
+              type: "paragraph",
+              content: [
+                {
+                  text: "three",
+                  type: "text",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      type: "ordered_list",
+      attrs: {
+        order: 1,
+      },
+      content: [
+        {
+          type: "list_item",
+          content: [
+            {
+              type: "paragraph",
+              content: [
+                {
+                  text: "one",
+                  type: "text",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: "list_item",
+          content: [
+            {
+              type: "paragraph",
+              content: [
+                {
+                  text: "two",
+                  type: "text",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: "list_item",
+          content: [
+            {
+              type: "paragraph",
+              content: [
+                {
+                  text: "three",
+                  type: "text",
+                },
+              ],
+            },
+          ],
         },
       ],
     },

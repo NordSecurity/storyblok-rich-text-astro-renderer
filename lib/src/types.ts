@@ -17,12 +17,11 @@ export type Schema = {
     paragraph?: ResponseSchemaFn;
     text?: ResponseSchemaFn;
     hard_break?: ResponseSchemaFn;
+    bullet_list?: ResponseSchemaFn;
+    ordered_list?: ResponseSchemaAttrsFn;
+    list_item?: ResponseSchemaFn;
     // TODO: add support. The following are known, though not supported yet
     // horizontal_rule?: ResponseSchemaFn;
-    // bullet_list?: ResponseSchemaFn;
-    // list_item?: ResponseSchemaFn;
-    // ordered_list?: ResponseSchemaAttrsFn;
-    // ordered_item?: ResponseSchemaFn;
     // blockquote?: ResponseSchemaFn;
     // code_block?: ResponseSchemaFn;
     // image?: ResponseSchemaFn;
@@ -75,7 +74,7 @@ type Text = {
 
 type Paragraph = {
   type: "paragraph";
-  content?: Array<Text | Break>;
+  content?: Array<Text | Break | ListItem>;
 };
 
 type Heading = {
@@ -94,10 +93,36 @@ type Blok = {
   };
 };
 
-export type SchemaNode = Break | Text | Heading | Paragraph | Blok;
+type ListItem = {
+  type: "list_item";
+  content?: Array<Paragraph | Blok | BulletList | OrderedList>;
+};
+
+type BulletList = {
+  type: "bullet_list";
+  content?: Array<ListItem>;
+};
+
+type OrderedList = {
+  type: "ordered_list";
+  attrs: {
+    order: number;
+  };
+  content?: Array<ListItem>;
+};
+
+export type SchemaNode =
+  | Break
+  | Text
+  | Heading
+  | Paragraph
+  | Blok
+  | BulletList
+  | OrderedList
+  | ListItem;
 
 // TODO: expand with full nodes/marks support
 export type RichTextType = {
   type: "doc";
-  content: Array<Heading | Paragraph | Blok>;
+  content: Array<Heading | Paragraph | Blok | BulletList | OrderedList>;
 };

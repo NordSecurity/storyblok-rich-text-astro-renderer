@@ -105,6 +105,46 @@ export const resolveNode = (
     };
   }
 
+  if (node.type === "ordered_list") {
+    const { content, attrs } = node;
+
+    return {
+      component: "ol",
+      content: content.map((node) => resolveNode(node, options)),
+      ...resolverFn?.({ attrs }),
+    };
+  }
+
+  if (node.type === "bullet_list") {
+    const { content } = node;
+
+    return {
+      component: "ul",
+      content: content.map((node) => resolveNode(node, options)),
+      ...resolverFn?.(),
+    };
+  }
+
+  if (node.type === "list_item") {
+    const { content } = node;
+
+    return {
+      component: "li",
+      content: content.map((node) => {
+        // skip rendering p tag inside li
+        if (node.type === "paragraph") {
+          return {
+            component: "Fragment",
+            content: node.content.map((node) => resolveNode(node, options)),
+          };
+        }
+
+        return resolveNode(node, options);
+      }),
+      ...resolverFn?.(),
+    };
+  }
+
   if (node.type === "text") {
     const { text, marks } = node;
 
