@@ -17,22 +17,31 @@ export type Schema = {
     paragraph?: ResponseSchemaFn;
     text?: ResponseSchemaFn;
     hard_break?: ResponseSchemaFn;
-    horizontal_rule?: ResponseSchemaFn;
-    bullet_list?: ResponseSchemaFn;
-    blockquote?: ResponseSchemaFn;
-    code_block?: ResponseSchemaFn;
-    image?: ResponseSchemaFn;
-    list_item?: ResponseSchemaFn;
-    ordered_item?: ResponseSchemaFn;
+    // TODO: add support. The following are known, though not supported yet
+    // horizontal_rule?: ResponseSchemaFn;
+    // bullet_list?: ResponseSchemaFn;
+    // list_item?: ResponseSchemaFn;
+    // ordered_list?: ResponseSchemaAttrsFn;
+    // ordered_item?: ResponseSchemaFn;
+    // blockquote?: ResponseSchemaFn;
+    // code_block?: ResponseSchemaFn;
+    // image?: ResponseSchemaFn;
   };
   marks?: {
     link?: ResponseSchemaAttrsFn;
     bold?: ResponseSchemaFn;
-    strong?: ResponseSchemaFn;
     underline?: ResponseSchemaFn;
     italic?: ResponseSchemaFn;
-    strike?: ResponseSchemaFn;
     styled?: ResponseSchemaAttrsFn;
+    // TODO: add support. The following are known, though not supported yet
+    // strike?: ResponseSchemaFn;
+    // superscript?: ResponseSchemaFn;
+    // subscript?: ResponseSchemaFn;
+    // code?: ResponseSchemaFn;
+    // anchor?: ResponseSchemaAttrsFn;
+    // emoji?: ResponseSchemaAttrsFn;
+    // textStyle?: ResponseSchemaAttrsFn;
+    // highlight?: ResponseSchemaAttrsFn;
   };
 };
 
