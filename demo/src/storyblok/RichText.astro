@@ -9,6 +9,7 @@ import Text from "../components/Text.astro";
 import BulletList from "../components/BulletList.astro";
 import Blockquote from "../components/Blockquote.astro";
 import Picture from "../components/Picture.astro";
+import CodeBlock from "../components/CodeBlock.astro";
 
 export interface Props {
   blok: {
@@ -58,6 +59,10 @@ const { text } = blok;
       image: ({ attrs }) => ({
         component: Picture,
         props: attrs,
+      }),
+      code_block: ({ attrs }) => ({
+        component: CodeBlock,
+        props: { syntax: attrs.class?.split("-")[1] },
       }),
     },
     marks: {

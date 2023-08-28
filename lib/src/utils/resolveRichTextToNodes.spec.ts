@@ -620,6 +620,62 @@ describe("resolveNode", () => {
       },
     });
   });
+
+  it("code_block", () => {
+    const node: SchemaNode = {
+      type: "code_block",
+      attrs: {
+        class: "language-javascript",
+      },
+      content: [
+        {
+          text: "const IsStoryblokFun = () => {\n  return true;\n}",
+          type: "text",
+        },
+      ],
+    };
+
+    // default
+    expect(resolveNode(node)).toStrictEqual({
+      component: "pre",
+      props: {
+        class: "language-javascript",
+      },
+      content: [
+        {
+          content: "const IsStoryblokFun = () => {\n  return true;\n}",
+        },
+      ],
+    });
+
+    // with schema override
+    expect(
+      resolveNode(node, {
+        schema: {
+          nodes: {
+            code_block: ({ attrs }) => {
+              const { class: className } = attrs;
+
+              return {
+                component: "pre",
+                props: { syntax: className?.split("-")[1] },
+              };
+            },
+          },
+        },
+      })
+    ).toStrictEqual({
+      component: "pre",
+      props: {
+        syntax: "javascript",
+      },
+      content: [
+        {
+          content: "const IsStoryblokFun = () => {\n  return true;\n}",
+        },
+      ],
+    });
+  });
 });
 
 describe("resolveMark", () => {

@@ -23,9 +23,14 @@ const richTextFromStoryblok: RichTextType = {
       type: "paragraph",
       content: [
         {
-          text: "This is simple paragraph.",
+          text: "This is simple paragraph. ",
           type: "text",
         },
+      ],
+    },
+    {
+      type: "paragraph",
+      content: [
         {
           text: "Marks: ",
           type: "text",
@@ -123,6 +128,18 @@ const richTextFromStoryblok: RichTextType = {
               type: "text",
             },
           ],
+        },
+      ],
+    },
+    {
+      type: "code_block",
+      attrs: {
+        class: "language-javascript",
+      },
+      content: [
+        {
+          text: "const IsStoryblokFun = () => {\n  return true;\n}",
+          type: "text",
         },
       ],
     },
