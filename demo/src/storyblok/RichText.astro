@@ -6,6 +6,7 @@ import { storyblokEditable } from "@storyblok/astro";
 import Link from "../components/Link.astro";
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
 import Text from "../components/Text.astro";
+import BulletList from "../components/BulletList.astro";
 
 export interface Props {
   blok: {
@@ -29,6 +30,24 @@ const { text } = blok;
         component: Text,
         props: {
           class: "this-is-paragraph",
+        },
+      }),
+      ordered_list: () => ({
+        component: "ol",
+        props: {
+          class: "ordered-list",
+        },
+      }),
+      bullet_list: () => ({
+        component: BulletList,
+      }),
+      list_item: () => ({
+        component: "li",
+        props: {
+          class: "list-item",
+          style: {
+            padding: "5px 0",
+          },
         },
       }),
     },

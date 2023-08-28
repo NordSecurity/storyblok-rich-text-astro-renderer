@@ -241,6 +241,265 @@ describe("resolveNode", () => {
       ],
     });
   });
+
+  it("list_item", () => {
+    const node: SchemaNode = {
+      type: "list_item",
+      content: [
+        {
+          type: "paragraph",
+          content: [
+            {
+              text: "one",
+              type: "text",
+            },
+          ],
+        },
+      ],
+    };
+
+    // default
+    expect(resolveNode(node)).toStrictEqual({
+      component: "li",
+      content: [
+        {
+          component: "Fragment",
+          content: [
+            {
+              content: "one",
+            },
+          ],
+        },
+      ],
+    });
+
+    // with schema override
+    expect(
+      resolveNode(node, {
+        schema: {
+          nodes: {
+            list_item: () => ({
+              props: { class: "list-item" },
+            }),
+          },
+        },
+      })
+    ).toStrictEqual({
+      component: "li",
+      props: {
+        class: "list-item",
+      },
+      content: [
+        {
+          component: "Fragment",
+          content: [{ content: "one" }],
+        },
+      ],
+    });
+  });
+
+  it("ordered_list", () => {
+    const node: SchemaNode = {
+      type: "ordered_list",
+      attrs: {
+        order: 1,
+      },
+      content: [
+        {
+          type: "list_item",
+          content: [
+            {
+              type: "paragraph",
+              content: [
+                {
+                  text: "one",
+                  type: "text",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: "list_item",
+          content: [
+            {
+              type: "paragraph",
+              content: [
+                {
+                  text: "two",
+                  type: "text",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    };
+
+    // default
+    expect(resolveNode(node)).toStrictEqual({
+      component: "ol",
+      content: [
+        {
+          component: "li",
+          content: [
+            {
+              component: "Fragment",
+              content: [{ content: "one" }],
+            },
+          ],
+        },
+        {
+          component: "li",
+          content: [
+            {
+              component: "Fragment",
+              content: [{ content: "two" }],
+            },
+          ],
+        },
+      ],
+    });
+
+    // with schema override
+    expect(
+      resolveNode(node, {
+        schema: {
+          nodes: {
+            ordered_list: () => ({
+              component: "ol",
+              props: { class: "this-is-ordered-list" },
+            }),
+          },
+        },
+      })
+    ).toStrictEqual({
+      component: "ol",
+      props: {
+        class: "this-is-ordered-list",
+      },
+      content: [
+        {
+          component: "li",
+          content: [
+            {
+              component: "Fragment",
+              content: [{ content: "one" }],
+            },
+          ],
+        },
+        {
+          component: "li",
+          content: [
+            {
+              component: "Fragment",
+              content: [{ content: "two" }],
+            },
+          ],
+        },
+      ],
+    });
+  });
+
+  it("bullet_list", () => {
+    const node: SchemaNode = {
+      type: "bullet_list",
+      content: [
+        {
+          type: "list_item",
+          content: [
+            {
+              type: "paragraph",
+              content: [
+                {
+                  text: "one",
+                  type: "text",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: "list_item",
+          content: [
+            {
+              type: "paragraph",
+              content: [
+                {
+                  text: "two",
+                  type: "text",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    };
+
+    // default
+    expect(resolveNode(node)).toStrictEqual({
+      component: "ul",
+      content: [
+        {
+          component: "li",
+          content: [
+            {
+              component: "Fragment",
+              content: [{ content: "one" }],
+            },
+          ],
+        },
+        {
+          component: "li",
+          content: [
+            {
+              component: "Fragment",
+              content: [{ content: "two" }],
+            },
+          ],
+        },
+      ],
+    });
+
+    // with schema override
+    expect(
+      resolveNode(node, {
+        schema: {
+          nodes: {
+            bullet_list: () => ({
+              component: "ul",
+              props: { class: "this-is-unordered-list" },
+            }),
+          },
+        },
+      })
+    ).toStrictEqual({
+      component: "ul",
+      props: {
+        class: "this-is-unordered-list",
+      },
+      content: [
+        {
+          component: "li",
+          content: [
+            {
+              component: "Fragment",
+              content: [{ content: "one" }],
+            },
+          ],
+        },
+        {
+          component: "li",
+          content: [
+            {
+              component: "Fragment",
+              content: [{ content: "two" }],
+            },
+          ],
+        },
+      ],
+    });
+  });
 });
 
 describe("resolveMark", () => {
