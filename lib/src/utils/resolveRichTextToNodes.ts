@@ -105,6 +105,13 @@ export const resolveNode = (
     };
   }
 
+  if (node.type === "horizontal_rule") {
+    return {
+      component: "hr",
+      ...resolverFn?.(),
+    };
+  }
+
   if (node.type === "ordered_list") {
     const { content, attrs } = node;
 

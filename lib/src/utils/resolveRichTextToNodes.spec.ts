@@ -11,7 +11,7 @@ describe("resolveNode", () => {
   const Text = () => null;
   const StoryblokComponent = () => null;
 
-  it("break", () => {
+  it("hard_break", () => {
     const node: SchemaNode = { type: "hard_break" };
 
     // default
@@ -35,6 +35,34 @@ describe("resolveNode", () => {
       component: "div",
       props: {
         class: "break",
+      },
+    });
+  });
+
+  it("horizontal_rule", () => {
+    const node: SchemaNode = { type: "horizontal_rule" };
+
+    // default
+    expect(resolveNode(node)).toStrictEqual({
+      component: "hr",
+    });
+
+    // with schema override
+    expect(
+      resolveNode(node, {
+        schema: {
+          nodes: {
+            horizontal_rule: () => ({
+              component: "div",
+              props: { class: "horizontal-rule" },
+            }),
+          },
+        },
+      })
+    ).toStrictEqual({
+      component: "div",
+      props: {
+        class: "horizontal-rule",
       },
     });
   });
