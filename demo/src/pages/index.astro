@@ -254,8 +254,17 @@ const richTextFromStoryblok: RichTextType = {
       type: "paragraph",
       content: [
         {
-          text: "Yet one more paragraph.",
+          text: "Yet one more paragraph with emoji ",
           type: "text",
+        },
+        {
+          type: "emoji",
+          attrs: {
+            name: "rocket",
+            emoji: "🚀",
+            fallbackImage:
+              "https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/1f680.png",
+          },
         },
       ],
     },

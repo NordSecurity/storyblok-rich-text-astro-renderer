@@ -699,6 +699,50 @@ describe("resolveNode", () => {
       ],
     });
   });
+
+  it("emoji", () => {
+    const node: SchemaNode = {
+      type: "emoji",
+      attrs: {
+        name: "rocket",
+        emoji: "🚀",
+        fallbackImage:
+          "https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/1f680.png",
+      },
+    };
+
+    // default
+    expect(resolveNode(node)).toStrictEqual({
+      content: "🚀",
+    });
+
+    // with schema override
+    expect(
+      resolveNode(node, {
+        schema: {
+          nodes: {
+            emoji: ({ attrs: { name, fallbackImage } }) => ({
+              component: "g-emoji",
+              props: {
+                class: "this-is-emoji",
+                alias: name,
+                "fallback-src": fallbackImage,
+              },
+            }),
+          },
+        },
+      })
+    ).toStrictEqual({
+      component: "g-emoji",
+      props: {
+        class: "this-is-emoji",
+        alias: "rocket",
+        "fallback-src":
+          "https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/1f680.png",
+      },
+      content: "🚀",
+    });
+  });
 });
 
 describe("resolveMark", () => {

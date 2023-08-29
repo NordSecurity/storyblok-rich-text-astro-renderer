@@ -24,6 +24,7 @@ export type Schema = {
     blockquote?: ResponseSchemaFn;
     image?: ResponseSchemaAttrsFn;
     code_block?: ResponseSchemaAttrsFn;
+    emoji?: ResponseSchemaAttrsFn;
   };
   marks?: {
     link?: ResponseSchemaAttrsFn;
@@ -37,7 +38,6 @@ export type Schema = {
     code?: ResponseSchemaFn;
     anchor?: ResponseSchemaAttrsFn;
     // TODO: add support. The following are known, though not supported yet
-    // emoji?: ResponseSchemaAttrsFn;
     // textStyle?: ResponseSchemaAttrsFn;
     // highlight?: ResponseSchemaAttrsFn;
   };
@@ -95,7 +95,7 @@ type Text = {
 
 type Paragraph = {
   type: "paragraph";
-  content?: Array<Text | Break | ListItem | Image>;
+  content?: Array<Text | Break | ListItem | Image | Emoji>;
 };
 
 type Heading = {
@@ -127,6 +127,15 @@ type Image = {
   };
 };
 
+type Emoji = {
+  type: "emoji";
+  attrs: {
+    name: string;
+    emoji: string;
+    fallbackImage: string;
+  };
+};
+
 type Blockquote = {
   type: "blockquote";
   content?: Array<
@@ -136,6 +145,7 @@ type Blockquote = {
     | OrderedList
     | HorizontalRule
     | Image
+    | Emoji
     | CodeBlock
   >;
 };
@@ -143,7 +153,7 @@ type Blockquote = {
 type ListItem = {
   type: "list_item";
   content?: Array<
-    Paragraph | Blok | BulletList | OrderedList | HorizontalRule | Image
+    Paragraph | Blok | BulletList | OrderedList | HorizontalRule | Image | Emoji
   >;
 };
 
@@ -179,7 +189,7 @@ type RichTextContent =
   | Blockquote
   | CodeBlock;
 
-export type SchemaNode = RichTextContent | Text | ListItem | Image;
+export type SchemaNode = RichTextContent | Text | ListItem | Image | Emoji;
 
 // TODO: expand with full marks support
 export type RichTextType = {

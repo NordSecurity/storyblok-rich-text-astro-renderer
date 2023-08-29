@@ -165,6 +165,7 @@ schema={{
     blockquote: () => ({ ... }),
     image: ({ attrs }) => ({ ... }),
     code_block: ({ attrs }) => ({ ... }),
+    emoji: ({ attrs }) => ({ ... }),
   },
   marks: {
     link: ({ attrs }) => { ... },
@@ -177,7 +178,6 @@ schema={{
     subscript: () => ({ ... }),
     code: () => ({ ... }),
     anchor: ({ attrs }) => ({ ... }),
-    emoji: ({ attrs }) => ({ ... }), // NOT SUPPORTED YET!
     textStyle: ({ attrs }) => ({ ... }), // NOT SUPPORTED YET!
     highlight: ({ attrs }) => ({ ... }), // NOT SUPPORTED YET!
   };
