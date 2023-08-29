@@ -268,6 +268,29 @@ describe("resolveNode", () => {
         },
       ],
     });
+
+    // empty blok
+    expect(
+      resolveNode(
+        {
+          type: "blok",
+          attrs: {
+            id: "00bda8a3-927b-493a-af40-2fd90f4c1f8f",
+            body: [],
+          },
+        },
+        {
+          resolver: (blok) => {
+            return {
+              component: StoryblokComponent,
+              props: { blok },
+            };
+          },
+        }
+      )
+    ).toStrictEqual({
+      content: [],
+    });
   });
 
   it("blockquote", () => {
@@ -714,6 +737,12 @@ describe("resolveMark", () => {
           class: "italic",
         },
       }),
+      strike: () => ({
+        component: "del",
+        props: {
+          class: "strike",
+        },
+      }),
       styled: ({ attrs }) => {
         const resolveTextColorToClass = (color) =>
           ({
@@ -879,6 +908,25 @@ describe("resolveMark", () => {
       content,
       props: {
         class: "this-is-red",
+      },
+    });
+  });
+
+  it("strike", () => {
+    const mark: Mark = { type: "strike" };
+
+    // default
+    expect(resolveMark(content, mark)).toStrictEqual({
+      component: "s",
+      content,
+    });
+
+    // with schema override
+    expect(resolveMark(content, mark, sharedSchema)).toStrictEqual({
+      component: "del",
+      content,
+      props: {
+        class: "strike",
       },
     });
   });
