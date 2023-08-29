@@ -17,5 +17,8 @@
   },
   "stackblitz": {
     "startCommand": "npm run start-stackblitz"
+  },
+  "volta": {
+    "node": "18.12.1"
   }
 }
