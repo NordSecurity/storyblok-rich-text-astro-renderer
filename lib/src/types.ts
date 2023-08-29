@@ -35,8 +35,8 @@ export type Schema = {
     superscript?: ResponseSchemaFn;
     subscript?: ResponseSchemaFn;
     code?: ResponseSchemaFn;
+    anchor?: ResponseSchemaAttrsFn;
     // TODO: add support. The following are known, though not supported yet
-    // anchor?: ResponseSchemaAttrsFn;
     // emoji?: ResponseSchemaAttrsFn;
     // textStyle?: ResponseSchemaAttrsFn;
     // highlight?: ResponseSchemaAttrsFn;
@@ -58,6 +58,12 @@ export type Mark =
         | "superscript"
         | "subscript"
         | "code";
+    }
+  | {
+      type: "anchor";
+      attrs: {
+        id: string;
+      };
     }
   | { type: "styled"; attrs: Record<string, unknown> }
   | {
