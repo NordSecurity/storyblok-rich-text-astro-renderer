@@ -284,6 +284,16 @@ export const resolveNode = (
       };
     }
   }
+
+  if (node.type === "emoji") {
+    const { attrs } = node;
+    const { emoji } = attrs;
+
+    return {
+      content: emoji,
+      ...resolverFn?.({ attrs }),
+    };
+  }
 };
 
 /**
