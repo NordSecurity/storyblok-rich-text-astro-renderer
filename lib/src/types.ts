@@ -65,7 +65,12 @@ export type Mark =
         id: string;
       };
     }
-  | { type: "styled"; attrs: Record<string, unknown> }
+  | {
+      type: "styled";
+      attrs: {
+        class: string;
+      };
+    }
   | {
       type: "link";
       attrs: {

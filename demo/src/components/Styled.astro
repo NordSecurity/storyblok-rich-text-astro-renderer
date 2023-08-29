@@ -1,0 +1,19 @@
+---
+const { class: className } = Astro.props;
+---
+
+<span class={className}>
+  <slot />
+</span>
+
+<style>
+  .text-blue {
+    color: rgb(129, 129, 238);
+  }
+  .text-red {
+    color: rgb(227, 97, 97);
+  }
+  .text-green {
+    color: rgb(75, 191, 96);
+  }
+</style>

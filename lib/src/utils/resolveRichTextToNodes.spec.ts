@@ -925,6 +925,9 @@ describe("resolveMark", () => {
     expect(resolveMark(content, mark)).toStrictEqual({
       component: "span",
       content,
+      props: {
+        class: "red",
+      },
     });
 
     // with schema override

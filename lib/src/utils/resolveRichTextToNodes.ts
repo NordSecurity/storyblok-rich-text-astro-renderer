@@ -72,10 +72,13 @@ export const resolveMark = (
 
   if (mark.type === "styled") {
     const resolverFn = schema?.marks?.[mark.type];
+    const { attrs } = mark;
+
     return {
       component: "span",
+      props: attrs,
       content,
-      ...resolverFn?.({ attrs: mark.attrs }),
+      ...resolverFn?.({ attrs }),
     };
   }
 

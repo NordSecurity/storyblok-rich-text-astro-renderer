@@ -11,6 +11,7 @@ import Blockquote from "../components/Blockquote.astro";
 import Picture from "../components/Picture.astro";
 import CodeBlock from "../components/CodeBlock.astro";
 import InlineCode from "../components/InlineCode.astro";
+import Styled from "../components/Styled.astro";
 
 export interface Props {
   blok: {
@@ -78,6 +79,10 @@ const { text } = blok;
           },
         };
       },
+      styled: ({ attrs }) => ({
+        component: Styled,
+        props: attrs,
+      }),
       code: () => ({
         component: InlineCode,
       }),
