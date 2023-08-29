@@ -114,6 +114,18 @@ export const resolveMark = (
       ...resolverFn?.(),
     };
   }
+
+  if (mark.type === "anchor") {
+    const resolverFn = schema?.marks?.[mark.type];
+    const { attrs } = mark;
+
+    return {
+      component: "span",
+      content,
+      props: attrs,
+      ...resolverFn?.({ attrs }),
+    };
+  }
 };
 
 // all available nodes: https://github.com/storyblok/storyblok-js-client/blob/main/src/schema.ts#L21

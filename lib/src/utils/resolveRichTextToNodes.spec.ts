@@ -775,6 +775,13 @@ describe("resolveMark", () => {
           class: "code",
         },
       }),
+      anchor: ({ attrs: { id } }) => ({
+        component: "span",
+        props: {
+          class: "anchor",
+          id,
+        },
+      }),
     },
   };
 
@@ -1002,6 +1009,34 @@ describe("resolveMark", () => {
       content,
       props: {
         class: "code",
+      },
+    });
+  });
+
+  it("anchor", () => {
+    const mark: Mark = {
+      type: "anchor",
+      attrs: {
+        id: "this-is-anchor",
+      },
+    };
+
+    // default
+    expect(resolveMark(content, mark)).toStrictEqual({
+      component: "span",
+      content,
+      props: {
+        id: "this-is-anchor",
+      },
+    });
+
+    // with schema override
+    expect(resolveMark(content, mark, sharedSchema)).toStrictEqual({
+      component: "span",
+      content,
+      props: {
+        class: "anchor",
+        id: "this-is-anchor",
       },
     });
   });
