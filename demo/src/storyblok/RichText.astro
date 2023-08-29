@@ -10,6 +10,7 @@ import BulletList from "../components/BulletList.astro";
 import Blockquote from "../components/Blockquote.astro";
 import Picture from "../components/Picture.astro";
 import CodeBlock from "../components/CodeBlock.astro";
+import InlineCode from "../components/InlineCode.astro";
 
 export interface Props {
   blok: {
@@ -77,6 +78,9 @@ const { text } = blok;
           },
         };
       },
+      code: () => ({
+        component: InlineCode,
+      }),
     },
   }}
   resolver={(blok) => {
