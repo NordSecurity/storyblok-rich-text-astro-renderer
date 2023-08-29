@@ -34,8 +34,8 @@ export type Schema = {
     strike?: ResponseSchemaFn;
     superscript?: ResponseSchemaFn;
     subscript?: ResponseSchemaFn;
+    code?: ResponseSchemaFn;
     // TODO: add support. The following are known, though not supported yet
-    // code?: ResponseSchemaFn;
     // anchor?: ResponseSchemaAttrsFn;
     // emoji?: ResponseSchemaAttrsFn;
     // textStyle?: ResponseSchemaAttrsFn;
@@ -56,7 +56,8 @@ export type Mark =
         | "underline"
         | "strike"
         | "superscript"
-        | "subscript";
+        | "subscript"
+        | "code";
     }
   | { type: "styled"; attrs: Record<string, unknown> }
   | {

@@ -769,6 +769,12 @@ describe("resolveMark", () => {
           class: "subscript",
         },
       }),
+      code: () => ({
+        component: "span",
+        props: {
+          class: "code",
+        },
+      }),
     },
   };
 
@@ -977,6 +983,25 @@ describe("resolveMark", () => {
       content,
       props: {
         class: "subscript",
+      },
+    });
+  });
+
+  it("code", () => {
+    const mark: Mark = { type: "code" };
+
+    // default
+    expect(resolveMark(content, mark)).toStrictEqual({
+      component: "code",
+      content,
+    });
+
+    // with schema override
+    expect(resolveMark(content, mark, sharedSchema)).toStrictEqual({
+      component: "span",
+      content,
+      props: {
+        class: "code",
       },
     });
   });

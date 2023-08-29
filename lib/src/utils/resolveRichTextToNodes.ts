@@ -105,6 +105,15 @@ export const resolveMark = (
       ...resolverFn?.(),
     };
   }
+
+  if (mark.type === "code") {
+    const resolverFn = schema?.marks?.[mark.type];
+    return {
+      component: "code",
+      content,
+      ...resolverFn?.(),
+    };
+  }
 };
 
 // all available nodes: https://github.com/storyblok/storyblok-js-client/blob/main/src/schema.ts#L21
