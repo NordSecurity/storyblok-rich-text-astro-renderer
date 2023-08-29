@@ -78,6 +78,15 @@ export const resolveMark = (
       ...resolverFn?.({ attrs: mark.attrs }),
     };
   }
+
+  if (mark.type === "strike") {
+    const resolverFn = schema?.marks?.[mark.type];
+    return {
+      component: "s",
+      content,
+      ...resolverFn?.(),
+    };
+  }
 };
 
 // all available nodes: https://github.com/storyblok/storyblok-js-client/blob/main/src/schema.ts#L21

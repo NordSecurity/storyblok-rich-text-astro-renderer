@@ -31,8 +31,8 @@ export type Schema = {
     underline?: ResponseSchemaFn;
     italic?: ResponseSchemaFn;
     styled?: ResponseSchemaAttrsFn;
+    strike?: ResponseSchemaFn;
     // TODO: add support. The following are known, though not supported yet
-    // strike?: ResponseSchemaFn;
     // superscript?: ResponseSchemaFn;
     // subscript?: ResponseSchemaFn;
     // code?: ResponseSchemaFn;
@@ -49,7 +49,7 @@ export type Options = {
 };
 
 export type Mark =
-  | { type: "bold" | "italic" | "underline" }
+  | { type: "bold" | "italic" | "underline" | "strike" }
   | { type: "styled"; attrs: Record<string, unknown> }
   | {
       type: "link";
