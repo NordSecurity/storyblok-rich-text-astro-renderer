@@ -96,6 +96,22 @@ const richTextFromStoryblok: RichTextType = {
           type: "text",
         },
         {
+          text: "styled",
+          type: "text",
+          marks: [
+            {
+              type: "styled",
+              attrs: {
+                class: "text-green",
+              },
+            },
+          ],
+        },
+        {
+          text: ", ",
+          type: "text",
+        },
+        {
           text: "strike",
           type: "text",
           marks: [
