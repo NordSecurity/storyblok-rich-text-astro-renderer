@@ -87,6 +87,24 @@ export const resolveMark = (
       ...resolverFn?.(),
     };
   }
+
+  if (mark.type === "superscript") {
+    const resolverFn = schema?.marks?.[mark.type];
+    return {
+      component: "sup",
+      content,
+      ...resolverFn?.(),
+    };
+  }
+
+  if (mark.type === "subscript") {
+    const resolverFn = schema?.marks?.[mark.type];
+    return {
+      component: "sub",
+      content,
+      ...resolverFn?.(),
+    };
+  }
 };
 
 // all available nodes: https://github.com/storyblok/storyblok-js-client/blob/main/src/schema.ts#L21

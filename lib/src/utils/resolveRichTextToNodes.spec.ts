@@ -737,12 +737,6 @@ describe("resolveMark", () => {
           class: "italic",
         },
       }),
-      strike: () => ({
-        component: "del",
-        props: {
-          class: "strike",
-        },
-      }),
       styled: ({ attrs }) => {
         const resolveTextColorToClass = (color) =>
           ({
@@ -757,6 +751,24 @@ describe("resolveMark", () => {
           },
         };
       },
+      strike: () => ({
+        component: "del",
+        props: {
+          class: "strike",
+        },
+      }),
+      superscript: () => ({
+        component: "sup",
+        props: {
+          class: "superscript",
+        },
+      }),
+      subscript: () => ({
+        component: "sub",
+        props: {
+          class: "subscript",
+        },
+      }),
     },
   };
 
@@ -927,6 +939,44 @@ describe("resolveMark", () => {
       content,
       props: {
         class: "strike",
+      },
+    });
+  });
+
+  it("superscript", () => {
+    const mark: Mark = { type: "superscript" };
+
+    // default
+    expect(resolveMark(content, mark)).toStrictEqual({
+      component: "sup",
+      content,
+    });
+
+    // with schema override
+    expect(resolveMark(content, mark, sharedSchema)).toStrictEqual({
+      component: "sup",
+      content,
+      props: {
+        class: "superscript",
+      },
+    });
+  });
+
+  it("subscript", () => {
+    const mark: Mark = { type: "subscript" };
+
+    // default
+    expect(resolveMark(content, mark)).toStrictEqual({
+      component: "sub",
+      content,
+    });
+
+    // with schema override
+    expect(resolveMark(content, mark, sharedSchema)).toStrictEqual({
+      component: "sub",
+      content,
+      props: {
+        class: "subscript",
       },
     });
   });
