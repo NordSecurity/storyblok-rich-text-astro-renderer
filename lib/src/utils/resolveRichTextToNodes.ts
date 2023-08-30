@@ -129,6 +129,34 @@ export const resolveMark = (
       ...resolverFn?.({ attrs }),
     };
   }
+
+  if (mark.type === "textStyle") {
+    const resolverFn = schema?.marks?.[mark.type];
+    const { attrs } = mark;
+
+    return {
+      component: "span",
+      content,
+      props: {
+        style: { color: attrs.color },
+      },
+      ...resolverFn?.({ attrs }),
+    };
+  }
+
+  if (mark.type === "highlight") {
+    const resolverFn = schema?.marks?.[mark.type];
+    const { attrs } = mark;
+
+    return {
+      component: "span",
+      content,
+      props: {
+        style: { backgroundColor: attrs.color },
+      },
+      ...resolverFn?.({ attrs }),
+    };
+  }
 };
 
 // all available nodes: https://github.com/storyblok/storyblok-js-client/blob/main/src/schema.ts#L21

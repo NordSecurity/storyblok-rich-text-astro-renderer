@@ -37,9 +37,8 @@ export type Schema = {
     subscript?: ResponseSchemaFn;
     code?: ResponseSchemaFn;
     anchor?: ResponseSchemaAttrsFn;
-    // TODO: add support. The following are known, though not supported yet
-    // textStyle?: ResponseSchemaAttrsFn;
-    // highlight?: ResponseSchemaAttrsFn;
+    textStyle?: ResponseSchemaAttrsFn;
+    highlight?: ResponseSchemaAttrsFn;
   };
 };
 
@@ -69,6 +68,12 @@ export type Mark =
       type: "styled";
       attrs: {
         class: string;
+      };
+    }
+  | {
+      type: "textStyle" | "highlight";
+      attrs: {
+        color: string;
       };
     }
   | {
@@ -191,7 +196,6 @@ type RichTextContent =
 
 export type SchemaNode = RichTextContent | Text | ListItem | Image | Emoji;
 
-// TODO: expand with full marks support
 export type RichTextType = {
   type: "doc";
   content: Array<RichTextContent>;

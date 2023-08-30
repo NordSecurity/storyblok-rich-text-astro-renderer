@@ -826,6 +826,20 @@ describe("resolveMark", () => {
           id,
         },
       }),
+      textStyle: ({ attrs: { color } }) => ({
+        component: "span",
+        props: {
+          class: "text-style",
+          style: { color },
+        },
+      }),
+      highlight: ({ attrs: { color } }) => ({
+        component: "span",
+        props: {
+          class: "highlight",
+          style: { backgroundColor: color },
+        },
+      }),
     },
   };
 
@@ -1084,6 +1098,62 @@ describe("resolveMark", () => {
       props: {
         class: "anchor",
         id: "this-is-anchor",
+      },
+    });
+  });
+
+  it("textStyle", () => {
+    const mark: Mark = {
+      type: "textStyle",
+      attrs: {
+        color: "#9CFFA4",
+      },
+    };
+
+    // default
+    expect(resolveMark(content, mark)).toStrictEqual({
+      component: "span",
+      content,
+      props: {
+        style: { color: "#9CFFA4" },
+      },
+    });
+
+    // with schema override
+    expect(resolveMark(content, mark, sharedSchema)).toStrictEqual({
+      component: "span",
+      content,
+      props: {
+        class: "text-style",
+        style: { color: "#9CFFA4" },
+      },
+    });
+  });
+
+  it("highlight", () => {
+    const mark: Mark = {
+      type: "highlight",
+      attrs: {
+        color: "#9CFFA4",
+      },
+    };
+
+    // default
+    expect(resolveMark(content, mark)).toStrictEqual({
+      component: "span",
+      content,
+      props: {
+        style: { backgroundColor: "#9CFFA4" },
+      },
+    });
+
+    // with schema override
+    expect(resolveMark(content, mark, sharedSchema)).toStrictEqual({
+      component: "span",
+      content,
+      props: {
+        class: "highlight",
+        style: { backgroundColor: "#9CFFA4" },
       },
     });
   });
