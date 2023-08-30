@@ -178,8 +178,8 @@ schema={{
     subscript: () => ({ ... }),
     code: () => ({ ... }),
     anchor: ({ attrs }) => ({ ... }),
-    textStyle: ({ attrs }) => ({ ... }), // NOT SUPPORTED YET!
-    highlight: ({ attrs }) => ({ ... }), // NOT SUPPORTED YET!
+    textStyle: ({ attrs }) => ({ ... }),
+    highlight: ({ attrs }) => ({ ... }),
   };
 }}
 ```
