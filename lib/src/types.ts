@@ -8,43 +8,83 @@ export type ComponentNode = {
   content?: string | ComponentNode[];
 };
 
-type ResponseSchemaAttrsFn = ({ attrs }) => ComponentNode;
-type ResponseSchemaFn = () => ComponentNode;
+type ResolverAttrs<Attrs> = ({ attrs }: { attrs: Attrs }) => ComponentNode;
+type Resolver = () => ComponentNode;
 
 export type Schema = {
   nodes?: {
-    heading?: ResponseSchemaAttrsFn;
-    paragraph?: ResponseSchemaFn;
-    text?: ResponseSchemaFn;
-    hard_break?: ResponseSchemaFn;
-    bullet_list?: ResponseSchemaFn;
-    ordered_list?: ResponseSchemaAttrsFn;
-    list_item?: ResponseSchemaFn;
-    horizontal_rule?: ResponseSchemaFn;
-    blockquote?: ResponseSchemaFn;
-    image?: ResponseSchemaAttrsFn;
-    code_block?: ResponseSchemaAttrsFn;
-    emoji?: ResponseSchemaAttrsFn;
+    heading?: ResolverAttrs<Heading["attrs"]>;
+    paragraph?: Resolver;
+    text?: Resolver;
+    hard_break?: Resolver;
+    bullet_list?: Resolver;
+    ordered_list?: ResolverAttrs<OrderedList["attrs"]>;
+    list_item?: Resolver;
+    horizontal_rule?: Resolver;
+    blockquote?: Resolver;
+    image?: ResolverAttrs<Image["attrs"]>;
+    code_block?: ResolverAttrs<CodeBlock["attrs"]>;
+    emoji?: ResolverAttrs<Emoji["attrs"]>;
   };
   marks?: {
-    link?: ResponseSchemaAttrsFn;
-    bold?: ResponseSchemaFn;
-    underline?: ResponseSchemaFn;
-    italic?: ResponseSchemaFn;
-    styled?: ResponseSchemaAttrsFn;
-    strike?: ResponseSchemaFn;
-    superscript?: ResponseSchemaFn;
-    subscript?: ResponseSchemaFn;
-    code?: ResponseSchemaFn;
-    anchor?: ResponseSchemaAttrsFn;
-    textStyle?: ResponseSchemaAttrsFn;
-    highlight?: ResponseSchemaAttrsFn;
+    link?: ResolverAttrs<Link["attrs"]>;
+    bold?: Resolver;
+    underline?: Resolver;
+    italic?: Resolver;
+    styled?: ResolverAttrs<Styled["attrs"]>;
+    strike?: Resolver;
+    superscript?: Resolver;
+    subscript?: Resolver;
+    code?: Resolver;
+    anchor?: ResolverAttrs<Anchor["attrs"]>;
+    textStyle?: ResolverAttrs<TextStyle["attrs"]>;
+    highlight?: ResolverAttrs<Highlight["attrs"]>;
   };
 };
 
 export type Options = {
   schema?: Schema;
   resolver?: (blok: SbBlok) => ComponentNode;
+};
+
+export type Anchor = {
+  type: "anchor";
+  attrs: {
+    id: string;
+  };
+};
+
+export type Styled = {
+  type: "styled";
+  attrs: {
+    class: string;
+  };
+};
+
+export type TextStyle = {
+  type: "textStyle";
+  attrs: {
+    color: string;
+  };
+};
+
+export type Highlight = {
+  type: "highlight";
+  attrs: {
+    color: string;
+  };
+};
+
+export type Link = {
+  type: "link";
+  attrs: {
+    href: string;
+    uuid?: Nullable<string>;
+    anchor?: Nullable<string>;
+    custom?: Record<string, unknown>;
+    target: "_self" | "_blank";
+    linktype: "url" | "story" | "email" | "asset";
+  };
 };
 
 export type Mark =
@@ -58,35 +98,11 @@ export type Mark =
         | "subscript"
         | "code";
     }
-  | {
-      type: "anchor";
-      attrs: {
-        id: string;
-      };
-    }
-  | {
-      type: "styled";
-      attrs: {
-        class: string;
-      };
-    }
-  | {
-      type: "textStyle" | "highlight";
-      attrs: {
-        color: string;
-      };
-    }
-  | {
-      type: "link";
-      attrs: {
-        href: string;
-        uuid?: Nullable<string>;
-        anchor?: Nullable<string>;
-        custom?: Record<string, unknown>;
-        target: "_self" | "_blank";
-        linktype: "url" | "story" | "email" | "asset";
-      };
-    };
+  | Anchor
+  | Styled
+  | TextStyle
+  | Highlight
+  | Link;
 
 type Break = { type: "hard_break" };
 
@@ -103,7 +119,7 @@ type Paragraph = {
   content?: Array<Text | Break | ListItem | Image | Emoji>;
 };
 
-type Heading = {
+export type Heading = {
   type: "heading";
   attrs: {
     level: 1 | 2 | 3 | 4 | 5 | 6;
@@ -119,7 +135,7 @@ type Blok = {
   };
 };
 
-type Image = {
+export type Image = {
   type: "image";
   attrs: {
     id: number;
@@ -132,7 +148,7 @@ type Image = {
   };
 };
 
-type Emoji = {
+export type Emoji = {
   type: "emoji";
   attrs: {
     name: string;
@@ -167,7 +183,7 @@ type BulletList = {
   content?: Array<ListItem>;
 };
 
-type OrderedList = {
+export type OrderedList = {
   type: "ordered_list";
   attrs: {
     order: number;
@@ -175,7 +191,7 @@ type OrderedList = {
   content?: Array<ListItem>;
 };
 
-type CodeBlock = {
+export type CodeBlock = {
   type: "code_block";
   attrs: {
     class: string;
