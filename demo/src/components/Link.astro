@@ -1,13 +1,15 @@
 ---
-export type Props = {
-  link: {
-    href: string;
-    target?: "_blank" | "_self";
-  };
-};
+import type { HTMLAttributes } from "astro/types";
+import type { Link } from "storyblok-rich-text-astro-renderer";
 
-const { link, ...props } = Astro.props;
-const { href, target } = link;
+export interface Props extends HTMLAttributes<"a"> {
+  link: Link["attrs"];
+}
+
+const {
+  link: { href, target },
+  ...props
+} = Astro.props;
 ---
 
 <a {href} {target} {...props}><slot /></a>

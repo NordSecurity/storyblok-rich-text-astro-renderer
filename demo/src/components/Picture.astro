@@ -1,4 +1,8 @@
 ---
+import type { Image } from "storyblok-rich-text-astro-renderer";
+
+export type Props = Image["attrs"];
+
 const { src, alt, title } = Astro.props;
 
 /*
