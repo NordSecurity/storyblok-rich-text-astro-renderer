@@ -170,6 +170,13 @@ export const resolveNode = (
   if (node.type === "heading") {
     const { content, attrs } = node;
 
+    // empty line
+    if (!content) {
+      return {
+        component: "br",
+      };
+    }
+
     return {
       component: `h${attrs.level}`,
       content: content.map((node) => resolveNode(node, options)),
@@ -252,7 +259,8 @@ export const resolveNode = (
         // skip rendering p tag inside li
         if (node.type === "paragraph") {
           return {
-            content: node.content.map((node) => resolveNode(node, options)),
+            content:
+              node.content?.map((node) => resolveNode(node, options)) || "",
           };
         }
 

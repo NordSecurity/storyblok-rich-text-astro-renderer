@@ -195,6 +195,13 @@ describe("resolveNode", () => {
       ],
     };
 
+    const emptyNode: SchemaNode = {
+      type: "heading",
+      attrs: {
+        level: 2,
+      },
+    };
+
     // default
     expect(resolveNode(node)).toStrictEqual({
       component: "h1",
@@ -224,6 +231,11 @@ describe("resolveNode", () => {
         variant: "level-1",
       },
       content: [{ content: "Hello from rich text" }],
+    });
+
+    // empty content
+    expect(resolveNode(emptyNode)).toStrictEqual({
+      component: "br",
     });
   });
 
@@ -362,6 +374,29 @@ describe("resolveNode", () => {
       ],
     };
 
+    const nodeWithEmptyParagraph: SchemaNode = {
+      type: "list_item",
+      content: [
+        {
+          type: "paragraph",
+        },
+      ],
+    };
+
+    const nodeWithParagraphContainingHardBreaksBeforeText: SchemaNode = {
+      type: "list_item",
+      content: [
+        {
+          type: "paragraph",
+          content: [
+            { type: "hard_break" },
+            { type: "hard_break" },
+            { text: "some text", type: "text" },
+          ],
+        },
+      ],
+    };
+
     // default
     expect(resolveNode(node)).toStrictEqual({
       component: "li",
@@ -395,6 +430,32 @@ describe("resolveNode", () => {
       content: [
         {
           content: [{ content: "one" }],
+        },
+      ],
+    });
+
+    // empty content
+    expect(resolveNode(nodeWithEmptyParagraph)).toStrictEqual({
+      component: "li",
+      content: [
+        {
+          content: "",
+        },
+      ],
+    });
+
+    // hard breaks before text
+    expect(
+      resolveNode(nodeWithParagraphContainingHardBreaksBeforeText)
+    ).toStrictEqual({
+      component: "li",
+      content: [
+        {
+          content: [
+            { component: "br" },
+            { component: "br" },
+            { content: "some text" },
+          ],
         },
       ],
     });
