@@ -12,13 +12,13 @@
     "try": "npm run build & npm run preview"
   },
   "dependencies": {
-    "@storyblok/astro": "^2.5.12",
-    "astro": "^2.10.14"
+    "@storyblok/astro": "^3.0.1",
+    "astro": "^3.2.3"
   },
   "stackblitz": {
     "startCommand": "npm run start-stackblitz"
   },
   "volta": {
-    "node": "18.12.1"
+    "node": "18.14.1"
   }
 }
