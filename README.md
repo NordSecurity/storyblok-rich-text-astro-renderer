@@ -84,7 +84,8 @@ To get the most basic functionality, add `RichText.astro` Storyblok component to
 
 ```js
 ---
-import RichTextRenderer, { type RichTextType } from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro";
+import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro";
+import type { RichTextType } from "storyblok-rich-text-astro-renderer"
 import { storyblokEditable } from "@storyblok/astro";
 
 export interface Props {
