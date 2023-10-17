@@ -22,16 +22,21 @@
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "require": "./dist/index.js",
+      "types": "./dist/types/index.d.ts"
     },
-    "./RichTextRenderer.astro": "./RichTextRenderer.astro"
+    "./RichTextRenderer.astro": {
+      "import": "./RichTextRenderer.astro",
+      "types": "./RichTextRenderer.ts"
+    }
   },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/types/index.d.ts",
   "files": [
     "dist",
-    "RichTextRenderer.astro"
+    "RichTextRenderer.astro",
+    "RichTextRenderer.ts"
   ],
   "scripts": {
     "build": "vite build",

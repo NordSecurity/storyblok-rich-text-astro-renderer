@@ -2,7 +2,8 @@
   "compilerOptions": {
     "module": "ESNext",
     "target": "ESNext",
-    "strict": false
+    "strict": false,
+    "jsx": "preserve"
   },
   "extends": "astro/tsconfigs/base",
   "$schema": "https://json.schemastore.org/tsconfig",
