@@ -1,0 +1,32 @@
+# By default this workflow will be running for PRs and pushes to the chore/feat branches
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches:
+      - 'chore/**'
+      - 'feat/**'
+jobs:
+  sast:
+    runs-on: sast
+    steps:
+      # Checking out SAST composite action
+      - uses: actions/checkout@v4
+        with: 
+          repository: NordSecurity/sast-configs
+          ref: main
+          ssh-key: ${{ secrets.SAST_CONFIG_KEY }}
+          path: .github/workflows/sast
+          # Checking out only SAST action and composite project configuration action
+          sparse-checkout: |
+            base/sast-action
+            actions/storyblok-rich-text-astro-renderer-sast-action
+      - uses: ./.github/workflows/sast/actions/storyblok-rich-text-astro-renderer-sast-action
+        with:
+          SAST_TEAM: ${{ secrets.SAST_TEAM }}
+          SAST_URL: ${{ secrets.SAST_URL }}
+          SAST_USERNAME: ${{ secrets.SAST_USERNAME }}
+          SAST_PASSWORD: ${{ secrets.SAST_PASSWORD }}
+          SAST_CLIENT_SECRET: ${{ secrets.SAST_CLIENT_SECRET }}
+          SAST_ACTION_KEY: ${{ secrets.SAST_ACTION_KEY }}
+    
