@@ -1,8 +1,9 @@
 # By default this workflow will be running for PRs and pushes to the chore/feat branches
 on:
+  pull_request_target:
+    types: [labeled]
   pull_request:
     branches: [main]
-    types: [labeled]
   push:
     branches:
       - 'chore/**'
@@ -14,6 +15,10 @@ jobs:
       github.event_name == 'push' ||
       (
         github.event_name == 'pull_request' &&
+        github.event.pull_request.head.repo.full_name == github.event.pull_request.base.repo.full_name
+      ) ||
+      (
+        github.event_name == 'pull_request_target' &&
         github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name &&
         github.event.label.name == 'security scan'
       )
