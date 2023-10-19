@@ -2,12 +2,20 @@
 on:
   pull_request:
      branches: [main]
+     types: [labeled]
   schedule:
     # runs every day at 20:00 UTC
     - cron:  '0 20 * * *'
 jobs:
   sca:
     runs-on: sca
+    if: |
+      github.event_name == 'schedule' ||
+      (
+        github.event_name == 'pull_request' &&
+        github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name &&
+        github.event.label.name == 'security scan'
+      )
     steps:
       # Checking out SCA composite action
       - uses: actions/checkout@v4
