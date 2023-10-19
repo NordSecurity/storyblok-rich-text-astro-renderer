@@ -1,8 +1,9 @@
 # By default this workflow will be running for PRs and on a scheduled basis
 on:
+  pull_request_target:
+    types: [labeled]
   pull_request:
      branches: [main]
-     types: [labeled]
   schedule:
     # runs every day at 20:00 UTC
     - cron:  '0 20 * * *'
@@ -13,6 +14,10 @@ jobs:
       github.event_name == 'schedule' ||
       (
         github.event_name == 'pull_request' &&
+        github.event.pull_request.head.repo.full_name == github.event.pull_request.base.repo.full_name
+      ) ||
+      (
+        github.event_name == 'pull_request_target' &&
         github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name &&
         github.event.label.name == 'security scan'
       )
