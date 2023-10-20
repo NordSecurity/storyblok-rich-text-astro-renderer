@@ -1,4 +1,4 @@
-# By default this workflow will be running for PRs and on a scheduled basis
+# By default this workflow will be running for PRs (rapid scans) and on push to main branch (full scan)
 on:
   pull_request_target:
     types: [labeled]
