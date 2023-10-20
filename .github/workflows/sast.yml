@@ -1,4 +1,4 @@
-# By default this workflow will be running for PRs and pushes to the chore/feat branches
+# By default this workflow will be running for PRs and pushes to other branches except main
 on:
   pull_request_target:
     types: [labeled]
