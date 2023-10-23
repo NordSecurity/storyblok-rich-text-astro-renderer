@@ -16,8 +16,10 @@ jobs:
         github.event.label.name == 'security scan'
       )
     steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
       # Checking out SAST composite action
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
         with: 
           repository: NordSecurity/sast-configs
           ref: main
