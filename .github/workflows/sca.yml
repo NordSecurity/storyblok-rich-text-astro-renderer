@@ -1,0 +1,62 @@
+# By default this workflow will be running for PRs (rapid scans) and on push to main branch (full scan)
+on:
+  pull_request_target:
+    types: [labeled]
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+jobs:
+  sca-full:
+    runs-on: sca
+    if: github.event_name == 'push'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
+      # Checking out SCA composite action
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
+        with: 
+          repository: NordSecurity/sca-configs
+          ref: main
+          ssh-key: ${{ secrets.SCA_ACTION_KEY }}
+          path: .github/workflows/sca
+          # Checking out only SCA action and composite project configuration action
+          sparse-checkout: |
+            base/sca-action
+            SCA/nordsecurity-storyblok-rich-text-astro-renderer-sca-action
+      - uses: ./.github/workflows/sca/SCA/nordsecurity-storyblok-rich-text-astro-renderer-sca-action
+        with:
+          SCA_URL: ${{ secrets.SCA_URL }}
+          SCA_API_TOKEN: ${{ secrets.SCA_API_TOKEN }}
+          SCA_FULL_SCAN: true
+  sca-rapid:
+    runs-on: sca
+    if: |
+      (
+        github.event_name == 'pull_request' &&
+        github.event.pull_request.head.repo.full_name == github.event.pull_request.base.repo.full_name
+      ) ||
+      (
+        github.event_name == 'pull_request_target' &&
+        github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name &&
+        github.event.label.name == 'security scan'
+      )
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
+      # Checking out SCA composite action
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
+        with: 
+          repository: NordSecurity/sca-configs
+          ref: main
+          ssh-key: ${{ secrets.SCA_ACTION_KEY }}
+          path: .github/workflows/sca
+          # Checking out only SCA action and composite project configuration action
+          sparse-checkout: |
+            base/sca-action
+            SCA/nordsecurity-storyblok-rich-text-astro-renderer-sca-action
+      - uses: ./.github/workflows/sca/SCA/nordsecurity-storyblok-rich-text-astro-renderer-sca-action
+        with:
+          SCA_URL: ${{ secrets.SCA_URL }}
+          SCA_API_TOKEN: ${{ secrets.SCA_API_TOKEN }}
+          SCA_FULL_SCAN: false
