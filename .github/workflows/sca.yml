@@ -29,6 +29,7 @@ jobs:
           SCA_URL: ${{ secrets.SCA_URL }}
           SCA_API_TOKEN: ${{ secrets.SCA_API_TOKEN }}
           SCA_FULL_SCAN: true
+          UNC_ACTION_KEY: ${{ secrets.UNC_ACTION_KEY }}
   sca-rapid:
     runs-on: sca
     if: |
@@ -60,3 +61,4 @@ jobs:
           SCA_URL: ${{ secrets.SCA_URL }}
           SCA_API_TOKEN: ${{ secrets.SCA_API_TOKEN }}
           SCA_FULL_SCAN: false
+          UNC_ACTION_KEY: ${{ secrets.UNC_ACTION_KEY }}

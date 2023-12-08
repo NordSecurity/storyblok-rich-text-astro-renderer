@@ -36,4 +36,6 @@ jobs:
           SAST_USERNAME: ${{ secrets.SAST_USERNAME }}
           SAST_PASSWORD: ${{ secrets.SAST_PASSWORD }}
           SAST_CLIENT_SECRET: ${{ secrets.SAST_CLIENT_SECRET }}
+          UNC_ACTION_KEY: ${{ secrets.UNC_ACTION_KEY }}
+          UNC_BRANCH_ENABLED: false
     
