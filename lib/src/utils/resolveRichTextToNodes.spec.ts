@@ -848,7 +848,7 @@ describe("resolveMark", () => {
             blue: "this-is-blue",
             red: "this-is-red",
             pink: "this-is-pink",
-          }[color]);
+          })[color];
 
         return {
           props: {
