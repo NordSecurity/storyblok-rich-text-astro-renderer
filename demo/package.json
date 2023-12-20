@@ -12,8 +12,8 @@
     "try": "npm run build & npm run preview"
   },
   "dependencies": {
-    "@storyblok/astro": "^3.0.1",
-    "astro": "^3.2.3"
+    "@storyblok/astro": "^4.0.0",
+    "astro": "^4.0.6"
   },
   "stackblitz": {
     "startCommand": "npm run start-stackblitz"

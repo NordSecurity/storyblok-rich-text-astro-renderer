@@ -19,6 +19,7 @@
   },
   "license": "MIT",
   "author": "Edvinas Jurele",
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
@@ -42,7 +43,7 @@
     "build": "vite build",
     "dev": "vite build --watch",
     "prepublishOnly": "npm run build && cp ../README.md ./",
-    "test": "npm run test:unit && npm run lint && npm run ts:check",
+    "test": "npm run test:unit && npm run ts:check",
     "test:unit": "vitest run",
     "test:watch": "vitest watch",
     "ts:check": "tsc"
@@ -52,16 +53,19 @@
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^9.0.3",
     "@semantic-release/npm": "^10.0.4",
-    "@storyblok/js": "^2.1.3",
-    "astro": "^2.7.0",
+    "@storyblok/js": "^3.0.0",
+    "astro": "^4.0.6",
     "semantic-release": "^21.1.1",
-    "vite": "^4.3.1",
-    "vite-plugin-dts": "^2.3.0"
+    "vite": "^5.0.10",
+    "vite-plugin-dts": "^3.6.4"
   },
-  "publishConfig": {
-    "access": "public"
+  "peerDependencies": {
+    "astro": "^3.0.0 || ^4.0.0"
   },
   "volta": {
     "node": "18.12.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
