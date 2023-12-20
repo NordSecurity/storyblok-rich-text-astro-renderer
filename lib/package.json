@@ -52,7 +52,7 @@
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^9.0.3",
-    "@semantic-release/npm": "^10.0.4",
+    "@semantic-release/npm": "^11.0.2",
     "@storyblok/js": "^3.0.0",
     "astro": "^4.0.6",
     "semantic-release": "^21.1.1",
