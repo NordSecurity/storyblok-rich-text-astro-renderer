@@ -27,7 +27,8 @@ jobs:
           persist-credentials: 'false' #By default, actions/checkout persists GIT credentials, we do not need this
       # Checking out SAST composite action
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
-        with: 
+        with:
+          persist-credentials: 'false' #By default, actions/checkout persists GIT credentials, we do not need this
           repository: NordSecurity/sast-configs
           ref: main
           ssh-key: ${{ secrets.SAST_ACTION_KEY }}
