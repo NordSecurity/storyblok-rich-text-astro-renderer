@@ -1,21 +1,34 @@
 # By default this workflow will be running for PRs (rapid scans) and on push to main branch (full scan)
 on:
   pull_request_target:
-    types: [labeled]
   pull_request:
     branches: [main]
   push:
     branches: [main]
+
+permissions: {} # Remove permissions
 jobs:
+  authorize:
+    environment:
+      ${{(github.event_name == 'pull_request_target' &&
+      github.event.pull_request.head.repo.full_name != github.repository) &&
+      'External' || 'Internal' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ✓
   sca-full:
+    needs: authorize
     runs-on: sca
     if: github.event_name == 'push'
     steps:
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
+        with:
+          persist-credentials: 'false' #By default, actions/checkout persists GIT credentials, we do not need this
       # Checking out SCA composite action
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
-        with: 
+        with:
+          persist-credentials: 'false' #By default, actions/checkout persists GIT credentials, we do not need this
           repository: NordSecurity/sca-configs
           ref: main
           ssh-key: ${{ secrets.SCA_ACTION_KEY }}
@@ -31,23 +44,19 @@ jobs:
           SCA_FULL_SCAN: true
           UNC_ACTION_KEY: ${{ secrets.UNC_ACTION_KEY }}
   sca-rapid:
+    needs: authorize
     runs-on: sca
-    if: |
-      (
-        github.event_name == 'pull_request' &&
-        github.event.pull_request.head.repo.full_name == github.event.pull_request.base.repo.full_name
-      ) ||
-      (
-        github.event_name == 'pull_request_target' &&
-        github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name &&
-        github.event.label.name == 'security scan'
-      )
+    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
     steps:
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
+        with:
+          ref: ${{github.event.pull_request.head.sha || github.ref}}
+          persist-credentials: 'false' #By default, actions/checkout persists GIT credentials, we do not need this
       # Checking out SCA composite action
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
-        with: 
+        with:
+          persist-credentials: 'false' #By default, actions/checkout persists GIT credentials, we do not need this
           repository: NordSecurity/sca-configs
           ref: main
           ssh-key: ${{ secrets.SCA_ACTION_KEY }}
