@@ -1,4 +1,4 @@
-import { defineConfig, Plugin } from "vite";
+import { defineConfig } from "vite";
 import path from "path";
 import dts from "vite-plugin-dts";
 
@@ -13,10 +13,6 @@ export default defineConfig(() => {
         fileName: (format) => (format === "es" ? `${name}.mjs` : `${name}.js`),
       },
     },
-    plugins: [
-      dts({
-        outputDir: "dist/types",
-      }) as unknown as Plugin,
-    ],
+    plugins: [dts({ entryRoot: "src", outDir: "dist/types" })],
   };
 });
