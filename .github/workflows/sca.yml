@@ -6,7 +6,9 @@ on:
   push:
     branches: [main]
 
-permissions: {} # Remove permissions
+permissions:
+  contents: read
+  
 jobs:
   authorize:
     environment:
@@ -46,7 +48,7 @@ jobs:
   sca-rapid:
     needs: authorize
     runs-on: sca
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+    if: (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) || github.event_name == 'pull_request_target'
     steps:
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
