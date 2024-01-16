@@ -6,7 +6,9 @@ on:
   push:
     branches: [main]
 
-permissions: {} # Remove permissions
+permissions:
+  contents: read
+  
 jobs:
   authorize:
     environment:
