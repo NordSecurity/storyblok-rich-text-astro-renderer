@@ -54,7 +54,7 @@
     "@semantic-release/github": "^9.0.3",
     "@semantic-release/npm": "^11.0.2",
     "@storyblok/js": "^3.0.0",
-    "astro": "^4.0.6",
+    "astro": "^4.2.7",
     "semantic-release": "^21.1.1",
     "vite": "^5.0.10",
     "vite-plugin-dts": "^3.6.4"
