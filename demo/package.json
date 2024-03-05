@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@storyblok/astro": "^4.0.0",
-    "astro": "^4.0.6"
+    "astro": "^4.4.11"
   },
   "stackblitz": {
     "startCommand": "npm run start-stackblitz"
