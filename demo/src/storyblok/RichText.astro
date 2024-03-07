@@ -1,7 +1,6 @@
 ---
-import RichTextRenderer, {
-  type RichTextType,
-} from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro";
+import { type RichTextType } from "storyblok-rich-text-astro-renderer";
+import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro";
 import { storyblokEditable } from "@storyblok/astro";
 import Link from "../components/Link.astro";
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
@@ -9,9 +8,10 @@ import Text from "../components/Text.astro";
 import BulletList from "../components/BulletList.astro";
 import Blockquote from "../components/Blockquote.astro";
 import Picture from "../components/Picture.astro";
-import CodeBlock from "../components/CodeBlock.astro";
 import InlineCode from "../components/InlineCode.astro";
 import Styled from "../components/Styled.astro";
+import Heading from "../components/Heading.astro";
+import { Code } from "astro:components";
 
 export interface Props {
   blok: {
@@ -27,9 +27,12 @@ const { text } = blok;
   content={text}
   schema={{
     nodes: {
-      heading: ({ attrs: { level } }) => ({
-        component: Text,
-        props: { variant: `h${level}` },
+      heading: ({ attrs: { level }, content }) => ({
+        component: Heading,
+        props: {
+          as: `h${level}`,
+          text: content?.[0].text,
+        },
       }),
       paragraph: () => ({
         component: Text,
@@ -62,9 +65,13 @@ const { text } = blok;
         component: Picture,
         props: attrs,
       }),
-      code_block: ({ attrs }) => ({
-        component: CodeBlock,
-        props: { syntax: attrs.class?.split("-")[1] },
+      code_block: ({ attrs, content }) => ({
+        component: Code, // native Astro Code component
+        props: {
+          lang: attrs.class?.split("-")[1],
+          theme: "solarized-dark",
+          code: content?.[0].text,
+        },
       }),
     },
     marks: {

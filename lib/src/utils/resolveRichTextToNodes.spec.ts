@@ -233,6 +233,30 @@ describe("resolveNode", () => {
       content: [{ content: "Hello from rich text" }],
     });
 
+    // with schema override - content via prop
+    expect(
+      resolveNode(node, {
+        schema: {
+          nodes: {
+            heading: ({ attrs: { level }, content }) => ({
+              component: Text,
+              props: {
+                as: `h${level}`,
+                text: content?.[0].text, // content was resolved explicitly to pass via prop
+              },
+            }),
+          },
+        },
+      })
+    ).toStrictEqual({
+      component: Text,
+      props: {
+        as: "h1",
+        text: "Hello from rich text",
+      },
+      content: [{ content: "Hello from rich text" }],
+    });
+
     // empty content
     expect(resolveNode(emptyNode)).toStrictEqual({
       component: "br",
