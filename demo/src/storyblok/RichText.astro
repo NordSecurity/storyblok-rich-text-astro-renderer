@@ -31,8 +31,8 @@ const { text } = blok;
       heading: (node) => ({
         component: Heading,
         props: {
-          as: `h${node.attrs.level}`,
-          text: node.content?.reduce((acc, curr) => `${acc}${curr.text}`, ""),
+          as: `h${node?.attrs.level}`,
+          text: node?.content?.reduce((acc, curr) => `${acc}${curr.text}`, ""),
         },
       }),
       paragraph: () => ({
@@ -62,30 +62,28 @@ const { text } = blok;
       blockquote: () => ({
         component: Blockquote,
       }),
-      image: ({ attrs }) => ({
+      image: (node) => ({
         component: Picture,
-        props: attrs,
+        props: node?.attrs,
       }),
-      code_block: ({ attrs }) => ({
+      code_block: (node) => ({
         component: CodeBlock,
-        props: { syntax: attrs.class?.split("-")[1] },
+        props: { syntax: node?.attrs.class?.split("-")[1] },
       }),
     },
     marks: {
-      link: ({ attrs }) => {
-        const { custom, ...restAttrs } = attrs;
-
+      link: (node) => {
         return {
           component: Link,
           props: {
-            link: { ...custom, ...restAttrs },
+            link: { ...node?.attrs },
             class: "i-am-link",
           },
         };
       },
-      styled: ({ attrs }) => ({
+      styled: (node) => ({
         component: Styled,
-        props: attrs,
+        props: node?.attrs,
       }),
       code: () => ({
         component: InlineCode,
