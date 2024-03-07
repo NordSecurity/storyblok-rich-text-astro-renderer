@@ -8,7 +8,7 @@ export type ComponentNode = {
   content?: string | ComponentNode[];
 };
 
-type Resolver<Node = null> = (node: Node) => ComponentNode;
+export type Resolver<Node = null> = (node?: Node) => ComponentNode;
 
 export type Schema = {
   nodes?: {
