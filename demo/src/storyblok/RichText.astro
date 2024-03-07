@@ -9,10 +9,11 @@ import Text from "../components/Text.astro";
 import BulletList from "../components/BulletList.astro";
 import Blockquote from "../components/Blockquote.astro";
 import Picture from "../components/Picture.astro";
-import CodeBlock from "../components/CodeBlock.astro";
+// import CodeBlock from "../components/CodeBlock.astro";
 import InlineCode from "../components/InlineCode.astro";
 import Styled from "../components/Styled.astro";
 import Heading from "../components/Heading.astro";
+import { Code } from "astro:components";
 
 export interface Props {
   blok: {
@@ -66,9 +67,21 @@ const { text } = blok;
         component: Picture,
         props: node?.attrs,
       }),
+
+      // Code example with custom code component
+      // code_block: (node) => ({
+      //   component: CodeBlock,
+      //   props: { syntax: node?.attrs.class?.split("-")[1] },
+      // }),
+
+      // Code example with native Astro Code component
       code_block: (node) => ({
-        component: CodeBlock,
-        props: { syntax: node?.attrs.class?.split("-")[1] },
+        component: Code,
+        props: {
+          lang: node?.attrs.class?.split("-")[1],
+          theme: "solarized-dark",
+          code: node?.content?.reduce((acc, curr) => `${acc}${curr.text}`, ""),
+        },
       }),
     },
     marks: {
