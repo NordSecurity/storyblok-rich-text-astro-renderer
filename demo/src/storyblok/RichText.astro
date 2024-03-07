@@ -12,6 +12,7 @@ import Picture from "../components/Picture.astro";
 import CodeBlock from "../components/CodeBlock.astro";
 import InlineCode from "../components/InlineCode.astro";
 import Styled from "../components/Styled.astro";
+import Heading from "../components/Heading.astro";
 
 export interface Props {
   blok: {
@@ -27,9 +28,12 @@ const { text } = blok;
   content={text}
   schema={{
     nodes: {
-      heading: ({ attrs: { level } }) => ({
-        component: Text,
-        props: { variant: `h${level}` },
+      heading: (node) => ({
+        component: Heading,
+        props: {
+          as: `h${node.attrs.level}`,
+          text: node.content?.reduce((acc, curr) => `${acc}${curr.text}`, ""),
+        },
       }),
       paragraph: () => ({
         component: Text,

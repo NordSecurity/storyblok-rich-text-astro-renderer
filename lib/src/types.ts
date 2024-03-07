@@ -8,37 +8,36 @@ export type ComponentNode = {
   content?: string | ComponentNode[];
 };
 
-type ResolverAttrs<Attrs> = ({ attrs }: { attrs: Attrs }) => ComponentNode;
-type Resolver = () => ComponentNode;
+type Resolver<Node = null> = (node: Node) => ComponentNode;
 
 export type Schema = {
   nodes?: {
-    heading?: ResolverAttrs<Heading["attrs"]>;
-    paragraph?: Resolver;
-    text?: Resolver;
-    hard_break?: Resolver;
-    bullet_list?: Resolver;
-    ordered_list?: ResolverAttrs<OrderedList["attrs"]>;
-    list_item?: Resolver;
-    horizontal_rule?: Resolver;
-    blockquote?: Resolver;
-    image?: ResolverAttrs<Image["attrs"]>;
-    code_block?: ResolverAttrs<CodeBlock["attrs"]>;
-    emoji?: ResolverAttrs<Emoji["attrs"]>;
+    heading?: Resolver<Heading>;
+    paragraph?: Resolver<Paragraph>;
+    text?: Resolver<Text>;
+    hard_break?: Resolver<Break>;
+    bullet_list?: Resolver<BulletList>;
+    ordered_list?: Resolver<OrderedList>;
+    list_item?: Resolver<ListItem>;
+    horizontal_rule?: Resolver<HorizontalRule>;
+    blockquote?: Resolver<Blockquote>;
+    image?: Resolver<Image>;
+    code_block?: Resolver<CodeBlock>;
+    emoji?: Resolver<Emoji>;
   };
   marks?: {
-    link?: ResolverAttrs<Link["attrs"]>;
+    link?: Resolver<Link>;
     bold?: Resolver;
     underline?: Resolver;
     italic?: Resolver;
-    styled?: ResolverAttrs<Styled["attrs"]>;
+    styled?: Resolver<Styled>;
     strike?: Resolver;
     superscript?: Resolver;
     subscript?: Resolver;
     code?: Resolver;
-    anchor?: ResolverAttrs<Anchor["attrs"]>;
-    textStyle?: ResolverAttrs<TextStyle["attrs"]>;
-    highlight?: ResolverAttrs<Highlight["attrs"]>;
+    anchor?: Resolver<Anchor>;
+    textStyle?: Resolver<TextStyle>;
+    highlight?: Resolver<Highlight>;
   };
 };
 
