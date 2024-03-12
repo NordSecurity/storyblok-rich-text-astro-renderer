@@ -1,0 +1,14 @@
+---
+type HeadingTag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
+export type Props = {
+  as: HeadingTag;
+  text: string;
+};
+
+const { as: Element = "h1", text, ...props } = Astro.props;
+---
+
+<Element id={props.id} {...props}>
+  {text}
+</Element>

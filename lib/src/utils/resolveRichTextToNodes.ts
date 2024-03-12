@@ -2,6 +2,7 @@ import type {
   ComponentNode,
   Mark,
   Options,
+  Resolver,
   RichTextType,
   Schema,
   SchemaNode,
@@ -14,7 +15,7 @@ export const resolveMark = (
   schema?: Schema
 ): ComponentNode => {
   if (mark.type === "link") {
-    const resolverFn = schema?.marks?.[mark.type];
+    const resolverFn: Resolver<Mark> = schema?.marks?.[mark.type];
 
     const attrs = { ...mark.attrs };
     const { linktype = "url" } = mark.attrs;
@@ -39,7 +40,7 @@ export const resolveMark = (
       component: "a",
       props: attrs,
       content,
-      ...resolverFn?.({ attrs: mark.attrs }),
+      ...resolverFn?.(mark),
     };
   }
 
@@ -78,7 +79,7 @@ export const resolveMark = (
       component: "span",
       props: attrs,
       content,
-      ...resolverFn?.({ attrs }),
+      ...resolverFn?.(mark),
     };
   }
 
@@ -126,7 +127,7 @@ export const resolveMark = (
       component: "span",
       content,
       props: attrs,
-      ...resolverFn?.({ attrs }),
+      ...resolverFn?.(mark),
     };
   }
 
@@ -140,7 +141,7 @@ export const resolveMark = (
       props: {
         style: { color: attrs.color },
       },
-      ...resolverFn?.({ attrs }),
+      ...resolverFn?.(mark),
     };
   }
 
@@ -154,7 +155,7 @@ export const resolveMark = (
       props: {
         style: { backgroundColor: attrs.color },
       },
-      ...resolverFn?.({ attrs }),
+      ...resolverFn?.(mark),
     };
   }
 };
@@ -165,9 +166,9 @@ export const resolveNode = (
   options: Options = {}
 ): ComponentNode => {
   const { schema } = options;
-  const resolverFn = schema?.nodes?.[node.type];
 
   if (node.type === "heading") {
+    const resolverFn = schema?.nodes?.[node.type];
     const { content, attrs } = node;
 
     // empty line
@@ -180,77 +181,87 @@ export const resolveNode = (
     return {
       component: `h${attrs.level}`,
       content: content.map((node) => resolveNode(node, options)),
-      ...resolverFn?.({ attrs }),
+      ...resolverFn?.(node),
     };
   }
 
   if (node.type === "hard_break") {
+    const resolverFn = schema?.nodes?.[node.type];
+
     return {
       component: "br",
-      ...resolverFn?.(),
+      ...resolverFn?.(node),
     };
   }
 
   if (node.type === "horizontal_rule") {
+    const resolverFn = schema?.nodes?.[node.type];
+
     return {
       component: "hr",
-      ...resolverFn?.(),
+      ...resolverFn?.(node),
     };
   }
 
   if (node.type === "blockquote") {
+    const resolverFn = schema?.nodes?.[node.type];
     const { content } = node;
 
     return {
       component: "blockquote",
       content: content.map((node) => resolveNode(node, options)),
-      ...resolverFn?.(),
+      ...resolverFn?.(node),
     };
   }
 
   if (node.type === "image") {
+    const resolverFn = schema?.nodes?.[node.type];
     const { attrs } = node;
     const { src, alt } = attrs;
 
     return {
       component: "img",
       props: { src, alt },
-      ...resolverFn?.({ attrs }),
+      ...resolverFn?.(node),
     };
   }
 
   if (node.type === "code_block") {
+    const resolverFn = schema?.nodes?.[node.type];
     const { attrs, content } = node;
 
     return {
       component: "pre",
       props: { class: attrs.class },
       content: content.map((node) => resolveNode(node, options)),
-      ...resolverFn?.({ attrs }),
+      ...resolverFn?.(node),
     };
   }
 
   if (node.type === "ordered_list") {
-    const { content, attrs } = node;
+    const resolverFn = schema?.nodes?.[node.type];
+    const { content } = node;
 
     return {
       component: "ol",
       content: content.map((node) => resolveNode(node, options)),
-      ...resolverFn?.({ attrs }),
+      ...resolverFn?.(node),
     };
   }
 
   if (node.type === "bullet_list") {
+    const resolverFn = schema?.nodes?.[node.type];
     const { content } = node;
 
     return {
       component: "ul",
       content: content.map((node) => resolveNode(node, options)),
-      ...resolverFn?.(),
+      ...resolverFn?.(node),
     };
   }
 
   if (node.type === "list_item") {
+    const resolverFn = schema?.nodes?.[node.type];
     const { content } = node;
 
     return {
@@ -266,11 +277,12 @@ export const resolveNode = (
 
         return resolveNode(node, options);
       }),
-      ...resolverFn?.(),
+      ...resolverFn?.(node),
     };
   }
 
   if (node.type === "text") {
+    const resolverFn = schema?.nodes?.[node.type];
     const { text, marks } = node;
 
     if (marks) {
@@ -281,17 +293,18 @@ export const resolveNode = (
 
       return {
         content: marked,
-        ...resolverFn?.(),
+        ...resolverFn?.(node),
       };
     }
 
     return {
       content: text,
-      ...resolverFn?.(),
+      ...resolverFn?.(node),
     };
   }
 
   if (node.type === "paragraph") {
+    const resolverFn = schema?.nodes?.[node.type];
     const { content } = node;
 
     // empty line
@@ -304,7 +317,7 @@ export const resolveNode = (
     return {
       component: "p",
       content: content.map((node) => resolveNode(node, options)),
-      ...resolverFn?.(),
+      ...resolverFn?.(node),
     };
   }
 
@@ -322,12 +335,13 @@ export const resolveNode = (
   }
 
   if (node.type === "emoji") {
+    const resolverFn = schema?.nodes?.[node.type];
     const { attrs } = node;
     const { emoji } = attrs;
 
     return {
       content: emoji,
-      ...resolverFn?.({ attrs }),
+      ...resolverFn?.(node),
     };
   }
 };

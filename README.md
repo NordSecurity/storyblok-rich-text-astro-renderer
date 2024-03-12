@@ -148,6 +148,49 @@ Use `resolver` to enable and control the rendering of embedded components, and `
 />
 ```
 
+### Content via prop
+
+By default, content in `nodes` is handled automatically and passed via slots keeping configuration as follows:
+
+```js
+heading: ({ attrs: { level } }) => ({
+  component: Text,
+  props: { variant: `h${level}` },
+}),
+```
+This implies that implementation of `Text` is as simple as:
+```js
+---
+const { variant } = Astro.props;
+const Component = variant || "p";
+---
+
+<Component>
+  <slot />
+</Component>
+```
+However in some cases, the users do implementation via props only, thus without slots:
+```js
+---
+const { variant, text } = Astro.props;
+const Component = variant || "p";
+---
+
+<Component>
+  {text}
+</Component>
+```
+This way the content must be handled explictly in the resolver function and passed via prop:
+```js
+heading: ({ attrs: { level }, content }) => ({
+  component: Text,
+  props: {
+    variant: `h${level}`,
+    text: content?.[0].text,
+  },
+}),
+```
+
 ## Schema
 
 The schema has `nodes` and `marks` to be configurable:
@@ -155,32 +198,32 @@ The schema has `nodes` and `marks` to be configurable:
 ```js
 schema={{
   nodes: {
-    heading: ({ attrs }) => ({ ... }),
+    heading: (node) => ({ ... }),
     paragraph: () => ({ ... }),
     text: () => ({ ... }),
     hard_break: () => ({ ... }),
     bullet_list: () => ({ ... }),
-    ordered_list: ({ attrs }) => ({ ... }),
+    ordered_list: (node) => ({ ... }),
     list_item: () => ({ ... }),
     horizontal_rule: () => ({ ... }),
     blockquote: () => ({ ... }),
-    image: ({ attrs }) => ({ ... }),
-    code_block: ({ attrs }) => ({ ... }),
-    emoji: ({ attrs }) => ({ ... }),
+    image: (node) => ({ ... }),
+    code_block: (node) => ({ ... }),
+    emoji: (node) => ({ ... }),
   },
   marks: {
-    link: ({ attrs }) => { ... },
+    link: (mark) => { ... },
     bold: () => ({ ... }),
     underline: () => ({ ... }),
     italic: () => ({ ... }),
-    styled: ({ attrs }) => { ... },
+    styled: (mark) => { ... },
     strike: () => ({ ... }),
     superscript: () => ({ ... }),
     subscript: () => ({ ... }),
     code: () => ({ ... }),
-    anchor: ({ attrs }) => ({ ... }),
-    textStyle: ({ attrs }) => ({ ... }),
-    highlight: ({ attrs }) => ({ ... }),
+    anchor: (mark) => ({ ... }),
+    textStyle: (mark) => ({ ... }),
+    highlight: (mark) => ({ ... }),
   };
 }}
 ```
