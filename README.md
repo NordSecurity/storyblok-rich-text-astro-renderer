@@ -104,9 +104,7 @@ const { text } = blok;
 ## Advanced usage
 
 Sensible default resolvers for marks and nodes are provided out-of-the-box. You only have to provide custom ones if you want to
-override the default behavior.
-
-Use `resolver` to enable and control the rendering of embedded components, and `schema` to control how you want the nodes and marks be rendered:
+override the default behavior:
 
 ```js
 <RichTextRenderer
@@ -144,9 +142,19 @@ Use `resolver` to enable and control the rendering of embedded components, and `
       props: { blok },
     };
   }}
+  textResolver={(text) => {
+    const currentYear = new Date().getFullYear().toString();
+    return {
+      content: text.replaceAll("{currentYear}", currentYear),
+    };
+  }}
   {...storyblokEditable(blok)}
 />
 ```
+
+- `schema` -  controls how you want the nodes and marks be rendered
+- `resolver` - enables and controls the rendering of embedded components
+- `textResolver` -  controls the rendering of the plain text. Useful if you need some text preprocessing (translation, sanitization, etc.)
 
 ### Content via prop
 
