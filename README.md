@@ -238,4 +238,3 @@ NOTE: if any of the latest Storyblok CMS nodes and marks are not supported, plea
 ## Contributing
 
 Please see our [contributing guidelines](./CONTRIBUTING.md) and our [code of conduct](https://github.com/NordSecurity/.github/blob/main/CODE_OF_CONDUCT.md).
-This project uses [semantic-release](https://semantic-release.gitbook.io/semantic-release/) for generating new versions by using commit messages. We use the Angular Convention to name the commits.
