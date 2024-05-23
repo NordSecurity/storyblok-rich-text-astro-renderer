@@ -14,17 +14,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 #v3
+        uses: actions/checkout@v4
         with:
           persist-credentials: 'false' #By default, actions/checkout persists GIT credentials, we do not need this
       - name: Setup Node
-        uses: actions/setup-node@1a4442cacd436585916779262731d5b162bc6ec7 #v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "npm"
+      - name: Update npm
+        run: npm install -g npm@latest
       - name: Install dependencies
         run: npm ci
       - name: Build lib
         run: npm run build
       - name: QA check
         run: npm run qa
+      - name: Upload npm log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-log
+          path: /home/runner/.npm/_logs/
