@@ -8,7 +8,7 @@ on:
 permissions: {} #Remove permissions
 jobs:
   sast:
-    uses: NordSecurity/sast-workflow/.github/workflows/sast.yml@35c715910e21a4b84949be8c8be3432f5c2911ce
+    uses: NordSecurity/security-scanner-workflows/.github/workflows/sast.yml@35c715910e21a4b84949be8c8be3432f5c2911ce
     secrets:
       SAST_TEAM: ${{ secrets.SAST_TEAM }}
       SAST_URL: ${{ secrets.SAST_URL }}
