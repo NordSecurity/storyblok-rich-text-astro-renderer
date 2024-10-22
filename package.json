@@ -15,7 +15,7 @@
     "format:package-json": "sort-package-json package.json lib/package.json",
     "format:prettier": "prettier --write .",
     "lint": "eslint . --ext .js,.ts,.astro",
-    "prepare": "husky install",
+    "prepare": "husky",
     "prettier:check": "prettier --check .",
     "qa": "npm run test && npm run lint && npm run prettier:check",
     "test": "npm run test:unit --workspace=lib"
