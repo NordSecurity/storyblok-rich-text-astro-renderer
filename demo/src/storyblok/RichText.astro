@@ -101,5 +101,11 @@ const { text } = blok;
       props: { blok },
     };
   }}
+  textResolver={(text) => {
+    const currentYear = new Date().getFullYear().toString();
+    return {
+      content: text.replaceAll("{currentYear}", currentYear),
+    };
+  }}
   {...storyblokEditable(blok)}
 />
