@@ -19,6 +19,7 @@ package-lock.json
 # project
 dist
 .yarn
+.astro
 .history
 **/coverage/
 .github

@@ -22,9 +22,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/types/index.d.ts"
+      "require": "./dist/index.js"
     },
     "./RichTextRenderer.astro": {
       "import": "./RichTextRenderer.astro",
@@ -50,12 +50,12 @@
   },
   "devDependencies": {
     "@storyblok/js": "^3.2.1",
-    "astro": "^4.16.18",
+    "astro": "^5.1.1",
     "vite": "^6.0.6",
     "vite-plugin-dts": "^4.4.0"
   },
   "peerDependencies": {
-    "astro": "^3.0.0 || ^4.0.0"
+    "astro": ">=3.x"
   },
   "volta": {
     "node": "20.11.0"
