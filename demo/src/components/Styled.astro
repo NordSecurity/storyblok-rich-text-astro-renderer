@@ -6,10 +6,6 @@ export type Props = Styled["attrs"];
 const { class: className } = Astro.props;
 ---
 
-<span class={className}>
-  <slot />
-</span>
-
 <style>
   .text-blue {
     color: rgb(129, 129, 238);
@@ -21,3 +17,5 @@ const { class: className } = Astro.props;
     color: rgb(75, 191, 96);
   }
 </style>
+
+<span class={className}><slot /></span>
