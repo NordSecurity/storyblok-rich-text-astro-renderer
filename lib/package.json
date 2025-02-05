@@ -58,7 +58,7 @@
     "astro": ">=3.x"
   },
   "volta": {
-    "node": "20.11.0"
+    "node": "22.13.1"
   },
   "publishConfig": {
     "access": "public"

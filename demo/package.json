@@ -19,6 +19,6 @@
     "startCommand": "npm run start-stackblitz"
   },
   "volta": {
-    "node": "20.11.0"
+    "node": "22.13.1"
   }
 }
