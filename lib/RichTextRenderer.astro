@@ -17,11 +17,28 @@ export type Props = {
    ```
    */
   resolver: Options["resolver"];
+  /**
+   Function to control the rendering of the plain text. Useful for text preprocessing, f.e.
+   ```
+    // replaces {currentYear} substring with the actual value in all texts
+    textResolver={(text) => {
+      const currentYear = new Date().getFullYear().toString();
+      return {
+        content: text.replaceAll("{currentYear}", currentYear),
+      };
+    }}
+   ```
+   */
+  textResolver: Options["textResolver"];
 };
 
-const { content, schema, resolver, ...props } = Astro.props;
+const { content, schema, resolver, textResolver, ...props } = Astro.props;
 
-const nodes = resolveRichTextToNodes(content, { schema, resolver });
+const nodes = resolveRichTextToNodes(content, {
+  schema,
+  resolver,
+  textResolver,
+});
 ---
 
 <div {...props}>

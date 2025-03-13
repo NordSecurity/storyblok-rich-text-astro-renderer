@@ -44,6 +44,7 @@ export type Schema = {
 export type Options = {
   schema?: Schema;
   resolver?: (blok: SbBlok) => ComponentNode;
+  textResolver?: (str: string) => ComponentNode;
 };
 
 export type Anchor = {

@@ -113,6 +113,83 @@ describe("resolveNode", () => {
     });
   });
 
+  it("text with textResolver", () => {
+    const node: SchemaNode = {
+      text: "Hello {name}",
+      type: "text",
+    };
+
+    const textResolver = (text: string) => {
+      return {
+        content: text.replace("{name}", "World"),
+      };
+    };
+
+    // default
+    expect(
+      resolveNode(node, {
+        textResolver,
+      })
+    ).toStrictEqual({
+      content: "Hello World",
+    });
+
+    // with marks
+    expect(
+      resolveNode(
+        {
+          ...node,
+          marks: [{ type: "bold" }],
+        },
+        {
+          textResolver,
+        }
+      )
+    ).toStrictEqual({
+      content: [
+        {
+          component: "b",
+          content: [
+            {
+              content: "Hello World",
+            },
+          ],
+        },
+      ],
+    });
+
+    // with schema override
+    expect(
+      resolveNode(node, {
+        schema: {
+          nodes: {
+            text: () => ({
+              component: "p",
+              props: { class: "class-1" },
+            }),
+          },
+        },
+        textResolver: (text) => ({
+          content: text.replace("{name}", "World"),
+          component: "span",
+          props: { class: "class-2" },
+        }),
+      })
+    ).toStrictEqual({
+      component: "p",
+      props: {
+        class: "class-1",
+      },
+      content: [
+        {
+          component: "span",
+          props: { class: "class-2" },
+          content: "Hello World",
+        },
+      ],
+    });
+  });
+
   it("paragraph", () => {
     const node: SchemaNode = {
       type: "paragraph",
