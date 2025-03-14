@@ -84,12 +84,12 @@ export type Link = {
     target: "_self" | "_blank";
     linktype: "url" | "story" | "email" | "asset";
     story?: {
-        name: string;
-        id: number;
-        uuid: string;
-        slug: string;
-        url: string;
-        full_slug: string;
+      name: string;
+      id: number;
+      uuid: string;
+      slug: string;
+      url: string;
+      full_slug: string;
         _stopResolving: boolean;
     }
   };
