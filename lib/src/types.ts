@@ -91,7 +91,7 @@ export type Link = {
       url: string;
       full_slug: string;
       _stopResolving: boolean;
-    }
+    };
   };
 };
 
