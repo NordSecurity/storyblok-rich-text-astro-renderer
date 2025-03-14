@@ -90,7 +90,7 @@ export type Link = {
       slug: string;
       url: string;
       full_slug: string;
-        _stopResolving: boolean;
+      _stopResolving: boolean;
     }
   };
 };
