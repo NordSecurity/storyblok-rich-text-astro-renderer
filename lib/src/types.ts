@@ -83,6 +83,15 @@ export type Link = {
     custom?: Record<string, unknown>;
     target: "_self" | "_blank";
     linktype: "url" | "story" | "email" | "asset";
+    story?: {
+      name: string;
+      id: number;
+      uuid: string;
+      slug: string;
+      url: string;
+      full_slug: string;
+      _stopResolving: boolean;
+    };
   };
 };
 
@@ -107,13 +116,13 @@ type Break = { type: "hard_break" };
 
 type HorizontalRule = { type: "horizontal_rule" };
 
-type Text = {
+export type Text = {
   type: "text";
   text: string;
   marks?: Mark[];
 };
 
-type Paragraph = {
+export type Paragraph = {
   type: "paragraph";
   content?: Array<Text | Break | ListItem | Image | Emoji>;
 };
@@ -126,7 +135,7 @@ export type Heading = {
   content?: Text[];
 };
 
-type Blok = {
+export type Blok = {
   type: "blok";
   attrs: {
     id: string;
@@ -177,7 +186,7 @@ type ListItem = {
   >;
 };
 
-type BulletList = {
+export type BulletList = {
   type: "bullet_list";
   content?: Array<ListItem>;
 };
