@@ -12,6 +12,7 @@ import InlineCode from "../components/InlineCode.astro";
 import Styled from "../components/Styled.astro";
 import Heading from "../components/Heading.astro";
 import { Code } from "astro:components";
+import Table from "../components/Table.astro";
 
 export interface Props {
   blok: {
@@ -72,6 +73,9 @@ const { text } = blok;
           theme: "solarized-dark",
           code: content?.[0].text,
         },
+      }),
+      table: () => ({
+        component: Table,
       }),
     },
     marks: {
