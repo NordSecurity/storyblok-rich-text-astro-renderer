@@ -344,6 +344,63 @@ export const resolveNode = (
       ...resolverFn?.(node),
     };
   }
+
+  if (node.type === "table") {
+    const resolverFn = schema?.nodes?.[node.type];
+    const { content } = node;
+
+    return {
+      component: "table",
+      content: content?.map((node) => resolveNode(node, options)),
+      ...resolverFn?.(node),
+    };
+  }
+
+  if (node.type === "tableRow") {
+    const resolverFn = schema?.nodes?.[node.type];
+    const { content } = node;
+
+    return {
+      component: "tr",
+      content: content?.map((node) => resolveNode(node, options)),
+      ...resolverFn?.(node),
+    };
+  }
+
+  if (node.type === "tableHeader") {
+    const resolverFn = schema?.nodes?.[node.type];
+    const { content, attrs } = node;
+
+    return {
+      component: "th",
+      props: {
+        colspan: attrs.colspan,
+        rowspan: attrs.rowspan,
+        colwidth: attrs.colwidth,
+      },
+      content: content?.map((node) => resolveNode(node, options)),
+      ...resolverFn?.(node),
+    };
+  }
+
+  if (node.type === "tableCell") {
+    const resolverFn = schema?.nodes?.[node.type];
+    const { content, attrs } = node;
+
+    return {
+      component: "td",
+      props: {
+        colspan: attrs.colspan,
+        rowspan: attrs.rowspan,
+        colwidth: attrs.colwidth,
+        style: attrs.backgroundColor
+          ? { backgroundColor: attrs.backgroundColor }
+          : undefined,
+      },
+      content: content?.map((node) => resolveNode(node, options)),
+      ...resolverFn?.(node),
+    };
+  }
 };
 
 /**

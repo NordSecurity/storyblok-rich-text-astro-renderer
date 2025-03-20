@@ -828,6 +828,269 @@ describe("resolveNode", () => {
       content: "🚀",
     });
   });
+
+  it("table", () => {
+    const node: SchemaNode = {
+      type: "table",
+      content: [
+        {
+          type: "tableRow",
+          content: [
+            {
+              type: "tableHeader",
+              attrs: {
+                colspan: 1,
+                rowspan: 1,
+                colwidth: [200],
+              },
+              content: [
+                {
+                  type: "paragraph",
+                  content: [
+                    {
+                      text: "Header 1",
+                      type: "text",
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: "tableHeader",
+              attrs: {
+                colspan: 1,
+                rowspan: 1,
+              },
+              content: [
+                {
+                  type: "paragraph",
+                  content: [
+                    {
+                      text: "Header 2",
+                      type: "text",
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: "tableRow",
+          content: [
+            {
+              type: "tableCell",
+              attrs: {
+                colspan: 1,
+                rowspan: 1,
+                backgroundColor: "#f0f0f0",
+              },
+              content: [
+                {
+                  type: "paragraph",
+                  content: [
+                    {
+                      text: "Cell 1",
+                      type: "text",
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: "tableCell",
+              attrs: {
+                colspan: 1,
+                rowspan: 1,
+              },
+              content: [
+                {
+                  type: "paragraph",
+                  content: [
+                    {
+                      text: "Cell 2",
+                      type: "text",
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    };
+
+    // Add this debug line
+    console.log("Actual output:", JSON.stringify(resolveNode(node), null, 2));
+
+    // default
+    expect(resolveNode(node)).toStrictEqual({
+      component: "table",
+      content: [
+        {
+          component: "tr",
+          content: [
+            {
+              component: "th",
+              props: {
+                colspan: 1,
+                rowspan: 1,
+                colwidth: [200],
+              },
+              content: [
+                {
+                  component: "p",
+                  content: [{ content: "Header 1" }],
+                },
+              ],
+            },
+            {
+              component: "th",
+              props: {
+                colspan: 1,
+                rowspan: 1,
+                colwidth: undefined,
+              },
+              content: [
+                {
+                  component: "p",
+                  content: [{ content: "Header 2" }],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          component: "tr",
+          content: [
+            {
+              component: "td",
+              props: {
+                colspan: 1,
+                rowspan: 1,
+                colwidth: undefined,
+                style: {
+                  backgroundColor: "#f0f0f0",
+                },
+              },
+              content: [
+                {
+                  component: "p",
+                  content: [{ content: "Cell 1" }],
+                },
+              ],
+            },
+            {
+              component: "td",
+              props: {
+                colspan: 1,
+                rowspan: 1,
+                colwidth: undefined,
+                style: undefined,
+              },
+              content: [
+                {
+                  component: "p",
+                  content: [{ content: "Cell 2" }],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+
+    // with schema override
+    expect(
+      resolveNode(node, {
+        schema: {
+          nodes: {
+            table: () => ({
+              component: "table",
+              props: { class: "custom-table" },
+            }),
+          },
+        },
+      })
+    ).toStrictEqual({
+      component: "table",
+      props: {
+        class: "custom-table",
+      },
+      content: [
+        {
+          component: "tr",
+          content: [
+            {
+              component: "th",
+              props: {
+                colspan: 1,
+                rowspan: 1,
+                colwidth: [200],
+              },
+              content: [
+                {
+                  component: "p",
+                  content: [{ content: "Header 1" }],
+                },
+              ],
+            },
+            {
+              component: "th",
+              props: {
+                colspan: 1,
+                rowspan: 1,
+                colwidth: undefined,
+              },
+              content: [
+                {
+                  component: "p",
+                  content: [{ content: "Header 2" }],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          component: "tr",
+          content: [
+            {
+              component: "td",
+              props: {
+                colspan: 1,
+                rowspan: 1,
+                colwidth: undefined,
+                style: {
+                  backgroundColor: "#f0f0f0",
+                },
+              },
+              content: [
+                {
+                  component: "p",
+                  content: [{ content: "Cell 1" }],
+                },
+              ],
+            },
+            {
+              component: "td",
+              props: {
+                colspan: 1,
+                rowspan: 1,
+                colwidth: undefined,
+                style: undefined,
+              },
+              content: [
+                {
+                  component: "p",
+                  content: [{ content: "Cell 2" }],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+  });
 });
 
 describe("resolveMark", () => {
