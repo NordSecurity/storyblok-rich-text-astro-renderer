@@ -221,20 +221,22 @@ export type TableRow = {
 export type TableHeader = {
   type: "tableHeader";
   attrs: {
-    colspan: number,
-    rowspan: number,
-    colwidth: Nullable<array>,
+    colspan: number;
+    rowspan: number;
+    colwidth?: Nullable<Array<number>>;
   };
-  content?: Array<TableCell>;
+  content?: Array<
+    Paragraph | Blok | BulletList | OrderedList | HorizontalRule | Image | Emoji
+  >;
 };
 
 export type TableCell = {
   type: "tableCell";
   attrs: {
-    colspan: number,
-    rowspan: number,
-    colwidth: Nullable<array>,
-    backgroundColor: Nullable<string>
+    colspan: number;
+    rowspan: number;
+    colwidth?: Nullable<Array<number>>;
+    backgroundColor?: Nullable<string>;
   };
   content?: Array<
     Paragraph | Blok | BulletList | OrderedList | HorizontalRule | Image | Emoji
