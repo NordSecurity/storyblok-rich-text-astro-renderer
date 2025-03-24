@@ -252,7 +252,11 @@ type RichTextContent =
   | Break
   | HorizontalRule
   | Blockquote
-  | CodeBlock;
+  | CodeBlock
+  | Table
+  | TableRow
+  | TableHeader
+  | TableCell;
 
 export type SchemaNode = RichTextContent | Text | ListItem | Image | Emoji;
 
