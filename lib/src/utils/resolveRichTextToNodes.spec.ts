@@ -920,9 +920,6 @@ describe("resolveNode", () => {
       ],
     };
 
-    // Add this debug line
-    console.log("Actual output:", JSON.stringify(resolveNode(node), null, 2));
-
     // default
     expect(resolveNode(node)).toStrictEqual({
       component: "table",
