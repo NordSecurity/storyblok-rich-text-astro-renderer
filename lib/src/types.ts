@@ -24,6 +24,7 @@ export type Schema = {
     image?: Resolver<Image>;
     code_block?: Resolver<CodeBlock>;
     emoji?: Resolver<Emoji>;
+    table?: Resolver<Table>;
   };
   marks?: {
     link?: Resolver<Link>;
@@ -207,6 +208,41 @@ export type CodeBlock = {
   content?: Array<Text>;
 };
 
+export type Table = {
+  type: "table";
+  content?: Array<TableRow>;
+};
+
+export type TableRow = {
+  type: "tableRow";
+  content?: Array<TableHeader | TableCell>;
+};
+
+export type TableHeader = {
+  type: "tableHeader";
+  attrs: {
+    colspan: number;
+    rowspan: number;
+    colwidth?: Nullable<Array<number>>;
+  };
+  content?: Array<
+    Paragraph | Blok | BulletList | OrderedList | HorizontalRule | Image | Emoji
+  >;
+};
+
+export type TableCell = {
+  type: "tableCell";
+  attrs: {
+    colspan: number;
+    rowspan: number;
+    colwidth?: Nullable<Array<number>>;
+    backgroundColor?: Nullable<string>;
+  };
+  content?: Array<
+    Paragraph | Blok | BulletList | OrderedList | HorizontalRule | Image | Emoji
+  >;
+};
+
 type RichTextContent =
   | Heading
   | Paragraph
@@ -216,7 +252,11 @@ type RichTextContent =
   | Break
   | HorizontalRule
   | Blockquote
-  | CodeBlock;
+  | CodeBlock
+  | Table
+  | TableRow
+  | TableHeader
+  | TableCell;
 
 export type SchemaNode = RichTextContent | Text | ListItem | Image | Emoji;
 

@@ -210,6 +210,7 @@ schema={{
     image: (node) => ({ ... }),
     code_block: (node) => ({ ... }),
     emoji: (node) => ({ ... }),
+    table: (node) => ({ ... }),
   },
   marks: {
     link: (mark) => { ... },
