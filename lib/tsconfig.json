@@ -8,5 +8,11 @@
   "extends": "astro/tsconfigs/base",
   "$schema": "https://json.schemastore.org/tsconfig",
   "include": ["./*.astro", "./**/*.ts"],
-  "exclude": ["node_modules/*", "./vite*.ts", "**/*.spec.ts", "dist"]
+  "exclude": [
+    "node_modules/*",
+    "./vite*.ts",
+    "**/*.spec.ts",
+    "dist",
+    "./RichTextRenderer.ts"
+  ]
 }
