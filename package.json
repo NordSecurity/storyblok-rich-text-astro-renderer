@@ -18,7 +18,7 @@
     "prepare": "husky",
     "prettier:check": "prettier --check .",
     "qa": "npm run test && npm run lint && npm run prettier:check",
-    "test": "npm run test:unit --workspace=lib"
+    "test": "npm run test --workspace=lib"
   },
   "lint-staged": {
     "*.{astro,js,css}": [
