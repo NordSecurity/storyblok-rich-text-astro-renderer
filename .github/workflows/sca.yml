@@ -2,9 +2,11 @@
 on:
   pull_request_target:
   pull_request:
-    branches: [main]
+    branches: [fix/vulnerability-bumps]
+    # branches: [main]
   push:
-    branches: [main]
+    branches: [fix/vulnerability-bumps]
+    # branches: [main]
 
 permissions:
   contents: read
