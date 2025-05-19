@@ -49,7 +49,7 @@
     "ts:check": "tsc"
   },
   "devDependencies": {
-    "@storyblok/js": "^3.2.2",
+    "@storyblok/js": "^3.5.0",
     "astro": "^5.2.0",
     "vite": "^6.2.7",
     "vite-plugin-dts": "^4.5.0"
