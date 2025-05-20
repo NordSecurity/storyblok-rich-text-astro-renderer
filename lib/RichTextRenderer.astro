@@ -1,8 +1,9 @@
 ---
+import type { HTMLAttributes } from "astro/types";
 import { resolveRichTextToNodes } from "./dist/index.mjs";
 import type { ComponentNode, Options, RichTextType } from "./dist/types";
 
-export type Props = {
+export type Props = HTMLAttributes<"div"> & {
   content: RichTextType;
   schema?: Options["schema"];
   /**
