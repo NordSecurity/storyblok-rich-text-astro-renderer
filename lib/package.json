@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@storyblok/js": "^4.2.0",
-    "astro": "^5.7.14",
+    "astro": "^5.11.0",
     "vite": "^6.3.5",
     "vite-plugin-dts": "^4.5.4"
   },
