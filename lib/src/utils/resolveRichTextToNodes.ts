@@ -139,7 +139,7 @@ export const resolveMark = (
       component: "span",
       content,
       props: {
-        style: { color: attrs.color },
+        style: { color: attrs?.color },
       },
       ...resolverFn?.(mark),
     };
@@ -153,7 +153,7 @@ export const resolveMark = (
       component: "span",
       content,
       props: {
-        style: { backgroundColor: attrs.color },
+        style: { backgroundColor: attrs?.color },
       },
       ...resolverFn?.(mark),
     };
