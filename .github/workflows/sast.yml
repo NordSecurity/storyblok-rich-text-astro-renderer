@@ -8,16 +8,12 @@ on:
 permissions: {} #Remove permissions
 jobs:
   sast:
-    uses: NordSecurity/security-scanner-workflows/.github/workflows/sast.yml@35c715910e21a4b84949be8c8be3432f5c2911ce
+    uses: NordSecurity/security-scanner-workflows/.github/workflows/sast.yml@dde62afa642639d9a0cd6b376d39726c57455894
     secrets:
-      SAST_TEAM: ${{ secrets.SAST_TEAM }}
       SAST_URL: ${{ secrets.SAST_URL }}
       SAST_USERNAME: ${{ secrets.SAST_USERNAME }}
       SAST_PASSWORD: ${{ secrets.SAST_PASSWORD }}
-      SAST_CLIENT_SECRET: ${{ secrets.SAST_CLIENT_SECRET }}
       SAST_ACTION_KEY: ${{ secrets.SAST_ACTION_KEY }}
-      UNC_ACTION_KEY: ${{ secrets.UNC_ACTION_KEY }}
     with:
       project-action-path: storyblok-rich-text-astro-renderer-sast-action
-      unc-branch-enabled: false
 
