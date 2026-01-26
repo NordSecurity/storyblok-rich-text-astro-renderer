@@ -14,13 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 #v3
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 #v6
         with:
           persist-credentials: 'false' #By default, actions/checkout persists GIT credentials, we do not need this
       - name: Setup Node
-        uses: actions/setup-node@1a4442cacd436585916779262731d5b162bc6ec7 #v3
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 #v6
         with:
-          node-version: 22
+          node-version: 24
           cache: "npm"
       - name: Install dependencies
         run: npm ci
