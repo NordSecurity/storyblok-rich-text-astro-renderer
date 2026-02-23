@@ -155,6 +155,7 @@ export type Image = {
     copyright?: string;
     meta_data?: Record<string, string>;
   };
+  marks?: Mark[];
 };
 
 export type Emoji = {

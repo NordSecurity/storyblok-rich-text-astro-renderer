@@ -216,8 +216,25 @@ export const resolveNode = (
 
   if (node.type === "image") {
     const resolverFn = schema?.nodes?.[node.type];
-    const { attrs } = node;
+    const { attrs, marks } = node;
     const { src, alt } = attrs;
+
+    if (marks) {
+      let marked: ComponentNode[] = [
+        {
+          component: "img",
+          props: { src, alt },
+          ...resolverFn?.(node),
+        },
+      ];
+      [...marks].reverse().forEach((mark) => {
+        marked = [resolveMark(marked, mark, schema)];
+      });
+
+      return {
+        content: marked,
+      };
+    }
 
     return {
       component: "img",
