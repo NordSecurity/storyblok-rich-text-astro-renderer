@@ -228,6 +228,31 @@ const richTextFromStoryblok: RichTextType = {
             meta_data: {},
           },
         },
+        {
+          type: "image",
+          attrs: {
+            id: 111112,
+            alt: "My alt text with Link",
+            src: "https://dummyimage.com/300x200/eee/aaa", // this will actually be Storyblok native link (https://a-us.storyblok.com/f/.../276x83/.../image.png) and it contains width/height information.
+            title: "The title",
+            source: "The source",
+            copyright: "The copyright text",
+            meta_data: {},
+          },
+          marks: [
+            {
+              type: "link",
+              attrs: {
+                href: "/img",
+                uuid: "6c401799-b2ad-4854-aa3e-f58ac59bf763",
+                anchor: null,
+                custom: {},
+                target: "_self",
+                linktype: "story",
+              },
+            },
+          ],
+        },
       ],
     },
     {

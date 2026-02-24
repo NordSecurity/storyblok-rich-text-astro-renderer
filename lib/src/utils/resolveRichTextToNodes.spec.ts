@@ -694,6 +694,29 @@ describe("resolveNode", () => {
       },
     };
 
+    const nodeWithMarks: SchemaNode = {
+      type: "image",
+      attrs: {
+        id: 218383,
+        alt: "My alt text",
+        src: "https://dummyimage.com/300x200/eee/aaa",
+        title: "The title",
+        source: "The source",
+        copyright: "The copyright text",
+        meta_data: {},
+      },
+      marks: [
+        {
+          type: "link",
+          attrs: {
+            linktype: "url",
+            href: "https://example.com/image_link",
+            target: "_blank",
+          },
+        },
+      ],
+    };
+
     // default
     expect(resolveNode(node)).toStrictEqual({
       component: "img",
@@ -726,6 +749,66 @@ describe("resolveNode", () => {
         alt: "My alt text",
         class: "this-is-image",
       },
+    });
+
+    // default
+    expect(resolveNode(nodeWithMarks)).toStrictEqual({
+      content: [
+        {
+          component: "a",
+          props: {
+            href: "https://example.com/image_link",
+            target: "_blank",
+          },
+          content: [
+            {
+              component: "img",
+              props: {
+                src: "https://dummyimage.com/300x200/eee/aaa",
+                alt: "My alt text",
+              },
+            },
+          ],
+        },
+      ],
+    });
+
+    // with schema override
+    expect(
+      resolveNode(nodeWithMarks, {
+        schema: {
+          nodes: {
+            image: ({ attrs }) => {
+              const { src, alt } = attrs;
+
+              return {
+                component: "img",
+                props: { src, alt, class: "this-is-image" },
+              };
+            },
+          },
+        },
+      })
+    ).toStrictEqual({
+      content: [
+        {
+          component: "a",
+          props: {
+            href: "https://example.com/image_link",
+            target: "_blank",
+          },
+          content: [
+            {
+              component: "img",
+              props: {
+                src: "https://dummyimage.com/300x200/eee/aaa",
+                alt: "My alt text",
+                class: "this-is-image",
+              },
+            },
+          ],
+        },
+      ],
     });
   });
 
