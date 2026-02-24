@@ -694,6 +694,29 @@ describe("resolveNode", () => {
       },
     };
 
+    const nodeWithMarks: SchemaNode = {
+      type: "image",
+      attrs: {
+        id: 218383,
+        alt: "My alt text",
+        src: "https://dummyimage.com/300x200/eee/aaa",
+        title: "The title",
+        source: "The source",
+        copyright: "The copyright text",
+        meta_data: {},
+      },
+      marks: [
+        {
+          type: "link",
+          attrs: {
+            linktype: "url",
+            href: "https://example.com/image_link",
+            target: "_blank",
+          },
+        },
+      ],
+    };
+
     // default
     expect(resolveNode(node)).toStrictEqual({
       component: "img",
@@ -727,34 +750,9 @@ describe("resolveNode", () => {
         class: "this-is-image",
       },
     });
-  });
-
-  it("image with link", () => {
-    const node: SchemaNode = {
-      type: "image",
-      attrs: {
-        id: 218383,
-        alt: "My alt text",
-        src: "https://dummyimage.com/300x200/eee/aaa",
-        title: "The title",
-        source: "The source",
-        copyright: "The copyright text",
-        meta_data: {},
-      },
-      marks: [
-        {
-          type: "link",
-          attrs: {
-            linktype: "url",
-            href: "https://example.com/image_link",
-            target: "_blank",
-          },
-        },
-      ],
-    };
 
     // default
-    expect(resolveNode(node)).toStrictEqual({
+    expect(resolveNode(nodeWithMarks)).toStrictEqual({
       content: [
         {
           component: "a",
@@ -777,7 +775,7 @@ describe("resolveNode", () => {
 
     // with schema override
     expect(
-      resolveNode(node, {
+      resolveNode(nodeWithMarks, {
         schema: {
           nodes: {
             image: ({ attrs }) => {
