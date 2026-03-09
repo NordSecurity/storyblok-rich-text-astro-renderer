@@ -28,17 +28,21 @@ const { text } = blok;
   content={text}
   schema={{
     nodes: {
-      heading: ({ attrs: { level }, content }) => ({
+      heading: ({ attrs: { level }, content, attrs }) => ({
         component: Heading,
         props: {
           as: `h${level}`,
           text: content?.[0].text,
+          // overriding node resolver requires manual handling of the alignment attr
+          style: attrs?.textAlign ? { textAlign: attrs?.textAlign } : undefined,
         },
       }),
-      paragraph: () => ({
+      paragraph: ({ attrs }) => ({
         component: Text,
         props: {
           class: "this-is-paragraph",
+          // overriding node resolver requires manual handling of the alignment attr
+          style: attrs?.textAlign ? { textAlign: attrs?.textAlign } : undefined,
         },
       }),
       ordered_list: () => ({

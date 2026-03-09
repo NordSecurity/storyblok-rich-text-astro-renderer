@@ -116,6 +116,9 @@ describe("resolveNode", () => {
   it("paragraph", () => {
     const node: SchemaNode = {
       type: "paragraph",
+      attrs: {
+        textAlign: 'right',
+      },
       content: [
         {
           text: "Simple text",
@@ -132,6 +135,9 @@ describe("resolveNode", () => {
     // default
     expect(resolveNode(node)).toStrictEqual({
       component: "p",
+      props: {
+        style: { textAlign: 'right' },
+      },
       content: [
         {
           content: "Simple text",
@@ -186,6 +192,7 @@ describe("resolveNode", () => {
       type: "heading",
       attrs: {
         level: 1,
+        textAlign: "right",
       },
       content: [
         {
@@ -205,6 +212,9 @@ describe("resolveNode", () => {
     // default
     expect(resolveNode(node)).toStrictEqual({
       component: "h1",
+      props: {
+        style: { textAlign: "right" },
+      },
       content: [
         {
           content: "Hello from rich text",
