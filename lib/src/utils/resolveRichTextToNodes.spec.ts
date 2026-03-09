@@ -117,7 +117,7 @@ describe("resolveNode", () => {
     const node: SchemaNode = {
       type: "paragraph",
       attrs: {
-        textAlign: 'right',
+        textAlign: "right",
       },
       content: [
         {
@@ -136,7 +136,7 @@ describe("resolveNode", () => {
     expect(resolveNode(node)).toStrictEqual({
       component: "p",
       props: {
-        style: { textAlign: 'right' },
+        style: { textAlign: "right" },
       },
       content: [
         {

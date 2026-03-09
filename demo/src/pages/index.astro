@@ -719,6 +719,26 @@ const richTextFromStoryblok: RichTextType = {
         textAlign: "right",
       },
     },
+    {
+      type: "paragraph",
+      content: [
+        {
+          type: "image",
+          attrs: {
+            id: 111112,
+            alt: "Aligned image",
+            src: "https://dummyimage.com/100x100/eee/aaa", // this will actually be Storyblok native link (https://a-us.storyblok.com/f/.../276x83/.../image.png) and it contains width/height information.
+            title: "The title",
+            source: "The source",
+            copyright: "The copyright text",
+            meta_data: {},
+          },
+        },
+      ],
+      attrs: {
+        textAlign: "center",
+      },
+    },
   ],
 };
 

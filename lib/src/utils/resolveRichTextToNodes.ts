@@ -29,7 +29,7 @@ export const resolveMark = (
       delete attrs.anchor;
     }
 
-    // remove redundant/excessive properties to avoid passing to html
+    // remove redundant/excessive properties to avoid passing to HTML
     delete attrs.uuid;
     delete attrs.linktype;
     if (attrs.target === "_self") {
@@ -169,7 +169,10 @@ export const resolveNode = (
 
   if (node.type === "heading") {
     const resolverFn = schema?.nodes?.[node.type];
-    const { content, attrs: {level, textAlign} } = node;
+    const {
+      content,
+      attrs: { level, textAlign },
+    } = node;
 
     // empty line
     if (!content) {
@@ -181,7 +184,7 @@ export const resolveNode = (
     return {
       component: `h${level}`,
       content: content.map((node) => resolveNode(node, options)),
-      ...(textAlign ? { props: { style: { textAlign } }} : {}),
+      ...(textAlign ? { props: { style: { textAlign } } } : {}),
       ...resolverFn?.(node),
     };
   }
