@@ -644,6 +644,101 @@ const richTextFromStoryblok: RichTextType = {
         },
       ],
     },
+    {
+      type: "heading",
+      content: [
+        {
+          text: "Heading with textAlign left",
+          type: "text",
+        },
+      ],
+      attrs: {
+        level: 1,
+        textAlign: "left",
+      },
+    },
+    {
+      type: "paragraph",
+      content: [
+        {
+          text: "Paragraph with textAlign left",
+          type: "text",
+        },
+      ],
+      attrs: {
+        textAlign: "left",
+      },
+    },
+    {
+      type: "heading",
+      content: [
+        {
+          text: "Heading with textAlign center",
+          type: "text",
+        },
+      ],
+      attrs: {
+        level: 1,
+        textAlign: "center",
+      },
+    },
+    {
+      type: "paragraph",
+      content: [
+        {
+          text: "Paragraph with textAlign center",
+          type: "text",
+        },
+      ],
+      attrs: {
+        textAlign: "center",
+      },
+    },
+    {
+      type: "heading",
+      content: [
+        {
+          text: "Heading with textAlign right",
+          type: "text",
+        },
+      ],
+      attrs: {
+        level: 1,
+        textAlign: "right",
+      },
+    },
+    {
+      type: "paragraph",
+      content: [
+        {
+          text: "Paragraph with textAlign right",
+          type: "text",
+        },
+      ],
+      attrs: {
+        textAlign: "right",
+      },
+    },
+    {
+      type: "paragraph",
+      content: [
+        {
+          type: "image",
+          attrs: {
+            id: 111112,
+            alt: "Aligned image",
+            src: "https://dummyimage.com/100x100/eee/aaa", // this will actually be Storyblok native link (https://a-us.storyblok.com/f/.../276x83/.../image.png) and it contains width/height information.
+            title: "The title",
+            source: "The source",
+            copyright: "The copyright text",
+            meta_data: {},
+          },
+        },
+      ],
+      attrs: {
+        textAlign: "center",
+      },
+    },
   ],
 };
 

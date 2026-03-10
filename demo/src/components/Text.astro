@@ -25,6 +25,7 @@ const Component = tag || variant || "p";
 
 <Component
   class:list={[variantClass, Astro.props.class, Astro.props["class:list"]]}
+  style={Astro.props.style}
 >
   <slot />
 </Component>

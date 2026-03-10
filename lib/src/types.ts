@@ -125,6 +125,9 @@ export type Text = {
 
 export type Paragraph = {
   type: "paragraph";
+  attrs?: {
+    textAlign?: "left" | "center" | "right" | "justify" | null;
+  };
   content?: Array<Text | Break | ListItem | Image | Emoji>;
 };
 
@@ -132,6 +135,7 @@ export type Heading = {
   type: "heading";
   attrs: {
     level: 1 | 2 | 3 | 4 | 5 | 6;
+    textAlign?: "left" | "center" | "right" | "justify" | null;
   };
   content?: Text[];
 };
