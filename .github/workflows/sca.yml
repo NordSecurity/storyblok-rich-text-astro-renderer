@@ -19,3 +19,5 @@ jobs:
       UNC_ACTION_KEY: ${{ secrets.UNC_ACTION_KEY }}
     with:
       project-action-path: nordsecurity-storyblok-rich-text-astro-renderer-sca-action
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # ref: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -5,7 +5,9 @@ on:
     branches-ignore: 
       - 'main'
 
-permissions: {} #Remove permissions
+permissions:
+  contents: read
+
 jobs:
   sast:
     uses: NordSecurity/security-scanner-workflows/.github/workflows/sast.yml@dde62afa642639d9a0cd6b376d39726c57455894
@@ -16,4 +18,5 @@ jobs:
       SAST_ACTION_KEY: ${{ secrets.SAST_ACTION_KEY }}
     with:
       project-action-path: storyblok-rich-text-astro-renderer-sast-action
-
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # ref: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
