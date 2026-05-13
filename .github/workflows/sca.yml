@@ -8,7 +8,7 @@ on:
 
 permissions:
   contents: read
-  
+
 jobs:
   sca:
     uses: NordSecurity/security-scanner-workflows/.github/workflows/sca.yml@35c715910e21a4b84949be8c8be3432f5c2911ce

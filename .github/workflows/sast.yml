@@ -5,8 +5,7 @@ on:
     branches-ignore: 
       - 'main'
 
-permissions:
-  contents: read
+permissions: {} #Remove permissions
 
 jobs:
   sast:

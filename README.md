@@ -1,5 +1,7 @@
 # Storyblok Rich Text Renderer for Astro
 
+test 9
+
 Renders Storyblok rich text content to Astro elements.
 
 [![GitHub](https://img.shields.io/github/license/NordSecurity/storyblok-rich-text-astro-renderer?style=flat-square)](https://github.com/NordSecurity/storyblok-rich-text-astro-renderer/blob/main/LICENSE)
