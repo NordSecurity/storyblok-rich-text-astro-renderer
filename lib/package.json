@@ -59,7 +59,7 @@
     "astro": ">=6.x"
   },
   "volta": {
-    "node": "22.13.1"
+    "node": "24.19.0"
   },
   "publishConfig": {
     "access": "public"
