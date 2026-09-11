@@ -4,8 +4,10 @@ import {
   resolveMark,
   resolveNode,
   resolveRichTextToNodes,
-} from "./resolveRichTextToNodes";
-import { Mark, RichTextType, Schema, SchemaNode } from "../types";
+} from "./resolveRichTextToNodes.js";
+import type { SbBlokData } from "@storyblok/js";
+
+import type { Mark, RichTextType, Schema, SchemaNode } from "../types.js";
 
 describe("resolveNode", () => {
   const Text = () => null;
@@ -1220,12 +1222,14 @@ describe("resolveMark", () => {
         },
       }),
       styled: ({ attrs }) => {
-        const resolveTextColorToClass = (color) =>
-          ({
-            blue: "this-is-blue",
-            red: "this-is-red",
-            pink: "this-is-pink",
-          })[color];
+        const resolveTextColorToClass = (color: string): string | undefined =>
+          (
+            ({
+              blue: "this-is-blue",
+              red: "this-is-red",
+              pink: "this-is-pink",
+            }) as Record<string, string>
+          )[color];
 
         return {
           props: {
@@ -1602,7 +1606,7 @@ describe("resolveRichTextToNodes", () => {
   const MultiLink = () => null;
   const StoryblokComponent = () => null;
 
-  const resolver = (blok) => {
+  const resolver = (blok: SbBlokData) => {
     return {
       component: StoryblokComponent,
       props: { blok },

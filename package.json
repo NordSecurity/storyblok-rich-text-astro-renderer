@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "build": "npm run build --workspace=lib --workspace=demo",
+    "clean": "rm -rf lib/node_modules && rm -rf demo/node_modules && rm -rf node_modules && rm -rf lib/dist && rm -rf demo/dist",
     "demo": "npm run try --workspace=demo",
     "dev:demo": "npm run dev --workspace=demo",
     "dev:lib": "npm run dev --workspace=lib",
