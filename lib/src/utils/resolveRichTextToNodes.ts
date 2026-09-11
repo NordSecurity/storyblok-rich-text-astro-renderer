@@ -6,7 +6,7 @@ import type {
   RichTextType,
   Schema,
   SchemaNode,
-} from "../types";
+} from "../types.js";
 
 // all available marks: https://github.com/storyblok/storyblok-js-client/blob/main/src/schema.ts#L84
 export const resolveMark = (
