@@ -12,7 +12,7 @@
     "try": "npm run build & npm run preview"
   },
   "dependencies": {
-    "@storyblok/astro": "^10.3.1",
+    "@storyblok/astro": "^10.0.1",
     "astro": "^7.3.2"
   },
   "stackblitz": {
