@@ -47,7 +47,7 @@
     "sort-package-json": "^3.2.1",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.57.2",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.12"
   },
   "volta": {
     "node": "24.19.0"
